@@ -1,0 +1,1854 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,700|Quattrocento:700|Bricolage+Grotesque:300|Sedgwick+Ave+Display:400');
+/**
+* COLOR SCHEME
+* Background:   #191919     rgb(25, 25, 25)
+* Detail:       #005AA1     rgb(0, 90, 161)
+* Main:         #003C6C     rgb(0, 60, 108)
+* Text:         white       rgb(255, 255, 255)
+* Rare:         #FF6EC7     rgb(255, 110, 199)
+* Danger:       #BE2625     rgb(190, 38, 37)
+* Sneaky:       #C0C0C0     rgb(192,192,192)
+* Blood:        #AF111C     rgb(175, 17, 28)
+* Sanity:       #4B0082     rgb(75, 0, 130)
+* Energy:       #FFCC11     rgb(255, 204, 17)
+* Exertion:     #FF6EC7     rgb(255, 110, 199)
+**/
+
+/* General text */
+@font-face {
+    font-family: 'Body';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/selawkl.ttf') format('truetype');
+}
+
+
+/* Titles */
+@font-face {
+    font-family: 'Titles';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/selawk.ttf') format('truetype');
+}
+
+/* Speech */
+@font-face {
+    font-family: 'Speech';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/selawk.ttf') format('truetype');
+}
+
+/* Fancy titles */
+@font-face {
+    font-family: 'Fancy Titles';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Cinzel Decorative Regular'), local('CinzelDecorative-Regular'),
+        url('../fonts/cinzel-decorative-v5-latin-regular.woff2') format('woff2'),
+        url('../fonts/cinzel-decorative-v5-latin-regular.woff') format('woff');
+}
+
+/* Interface */
+@font-face {
+    font-family: 'Interface';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'),
+        url('../fonts/source-sans-pro-v10-latin-regular.woff2') format('woff2'),
+        url('../fonts/source-sans-pro-v10-latin-regular.woff') format('woff');
+}
+
+/* Inputs - Monospace */
+@font-face {
+    font-family: 'MonoInput';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Ubuntu Mono'), local('UbuntuMono-Regular'),
+        url('../fonts/ubuntu-mono-v6-latin-regular.woff2') format('woff2'),
+        url('../fonts/ubuntu-mono-v6-latin-regular.woff') format('woff');
+}
+
+html{
+    height: 100%;
+}
+
+body{
+    font-family: "Body";
+    margin: 0;
+    min-height: 80%;
+    min-width: 100%;
+    background-color: #191919;             /* Background */
+}
+
+@media (min-width: 1210px) and (min-height: 810px) {
+    body {
+        overflow: hidden;
+    }
+}
+.shop-header {
+    font-family: Sedgwick Ave Display;
+    color: white;
+    background-color: #557D8B; /* Add a background color for visibility */
+	text-align: center; /* Center the content horizontally */
+	margin: 0 auto; /* Center the container horizontally within its parent */
+    display: flex;
+    align-items: center;
+    padding: 10px;
+	width: 75%px;
+	grid-column: 2 / span 4;
+}
+
+.shop-title{
+ 
+    font-size: 14pt;
+    font-family: sans-serif;
+    font-weight: lighter;
+	 color: white;
+     background-color: #557D8B;
+	 width: 710px;
+}
+
+
+.shop-header span {
+    text-align: center; /* Center-align the text within each span */
+    padding: 10px; /* Add padding for spacing */
+	width: 260px;
+}
+/* Container for each shop item */
+.shop-item {
+	text-align: center; /* Center the content horizontally */
+	margin: 0 auto; /* Center the container horizontally within its parent */
+    display: flex;
+    align-items: center;
+    padding: 10px;
+	width: 75%px;
+    border-bottom: 1px solid #ccc; /* Optional: add a border between items */
+	background-color:#557D8B;
+}
+.shop-item span {
+   width: 300px;
+}
+
+.shop-item Button {
+   width: 90px;
+}
+
+
+.shop-item img {
+   width: 32px;
+}
+
+/* Main subtitles. */
+.subtitle{
+    font-size: 32px;
+	text-align:left;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px black; /* Text-shadow */
+	margin-left: 90px;
+}
+
+a{
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:link, a:visited{
+    color: white;               /* Text */
+}
+
+p, h1, h2, h3, h4, h5, h6{
+    margin-bottom: 20px;
+}
+
+button:focus, textarea:focus{
+    outline: 0;
+}
+
+/* Speech-color. */
+.blue{
+    font-family: "Speech";
+    color: #005AA1; /* Static */
+}
+
+/* Speech-color. */
+.cyan{
+    font-family: "Speech";
+    color: #00A2E8; /* Static */
+}
+
+/* Speech-color. */
+.greyishblue{
+    font-family: "Speech";
+    color: #5878A8; /* Static */
+}
+
+/* Speech-color. */
+.pink{
+    font-family: "Speech";
+    color: #FF6EC7; /* Static */
+}
+
+/* Speech-color. */
+.palepink{
+    font-family: "Speech";
+    color: #E4B1AB; /* Static */
+}
+
+/* Speech-color. */
+.purple{
+    font-family: "Speech";
+    color: #AC3BE4; /* Static */
+}
+
+/* Speech-color. */
+.yellow{
+    font-family: "Speech";
+    color: #C4BC1A; /* Static */
+}
+
+/* Speech-color. */
+.brightred{
+    font-family: "Speech";
+    color: #BE2625; /* Static */
+}
+
+/* Speech-color. */
+.red{
+    font-family: "Speech";
+    color: #AF111C; /* Static */
+}
+
+/* Speech-color. */
+.darkred{
+    font-family: "Speech";
+    color: #800000; /* Static */
+}
+
+/* Speech-color. */
+.pinkred{
+    font-family: "Speech";
+    color: #91273b; /* Static */
+}
+
+/* Speech-color. */
+.green{
+    font-family: "Speech";
+    color: #61B329; /* Static */
+}
+
+/* Speech-color. */
+.milgreen{
+    font-family: "Speech";
+    color: #669048; /* Static */
+}
+
+/* Speech-color. */
+.lightgreen{
+    font-family: "Speech";
+    color: #9BDB9C; /* Static */
+}
+
+/* Speech-color. */
+.white{
+    font-family: "Speech";
+    color: white; /* Static */
+}
+
+/* Speech-color. */
+.black{
+    font-family: "Speech";
+    color: #191919; /* Static */
+}
+
+/* Speech-color. */
+.brown{
+    font-family: "Speech";
+    color: #B47B2E; /* Static */
+}
+
+/* Speech-color. */
+.orange{
+    font-family: "Speech";
+    color:  #FF6600; /* Static*/
+}
+
+/* Used in theme transitions. */
+.themetransition{
+    transition: background-color 2.0s ease, border-color 2.0s ease, color 2.0s ease !important;
+}
+
+/* Used in scenes and throughout the project. */
+.bold{
+    font-weight: bold;
+}
+
+/* Used in scenes and throughout the project. */
+.italic {
+    font-style: italic;
+}
+
+/* Used in scenes and throughout the project. */
+.underline {
+    text-decoration: underline;
+}
+
+/* Used in scenes and throughout the project. */
+.strikethrough {
+    text-decoration: line-through;
+}
+
+/* Used in scenes and throughout the project. */
+.small {
+    font-size: 12px;
+}
+
+/* Used in scenes and throughout the project. */
+.big {
+    font-size: 20px;
+}
+
+/* Used in scenes and throughout the project. */
+.nomargin{
+    margin-bottom: 0px !important;
+}
+
+/* Used in stat changes and scenes. */
+.center{
+    text-align: center !important;
+}
+
+/* Various parts that are not yet done. */
+.todo{
+    color: red;
+    background-color: yellow;
+}
+/* Outer status tab healthbar. */
+.healthbar {
+    margin-left: 75px;
+    width: 794px;
+    height: 40px;
+    border-color: #191919;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 43px 0px 20px 0px;
+    overflow: hidden;
+
+}
+.healthbarnumber {
+	color:white;
+}
+/* Inner status tab healthbar. */
+.healthbarinner {
+    height: 100%;
+}
+.healhbarcomment {
+    width: 350px;
+    float: left;
+    text-align: left;
+    margin-left: 90px;
+}
+
+/* Status tab health. */
+.health {
+    background-color: #AF111C;      /* Blood */
+}
+
+/* Status tab Will. */
+.will {
+    background-color: #00A2E8;      /* Will */
+}
+
+.libido{
+	background-color: #FF6EC7;
+}
+.xp{
+	 background-color: #669048;      /* XP */
+}
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: lighter;
+    overflow: hidden;
+	background-image:url("IMAGE/Backgrounds/Start.png ");
+	background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+
+body.switched {
+    transition: color 1s, background-color 1s;
+}
+
+h1 {
+	color:white;
+	text-align: center;
+}
+h2 {
+    text-align: center;
+    font-family: "Bricolage Grotesque", Georgia, 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+}
+h3 { font-family: "Sedgwick Ave Display";
+	text-align: center;
+}
+h1 {
+    font-size: 30pt;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 14pt;
+    font-style: italic;
+    font-family: sans-serif;
+    font-weight: lighter;
+    color: #BBB;
+}
+
+.title{
+	z-index:1;
+    display:block;
+	position: fixed;
+	font-family: Sedgwick Ave Display;
+    font-size: 45px;
+    margin-bottom: 25px;
+	color:white;
+	left: 320px;
+	top: 175px;
+text-shadow: 1px 1px 2px black;}
+
+/* Half of the main window. */
+.half{
+	margin-left: 90px;
+    width: 340px;
+    float: left;
+	
+}
+
+/* Left half of the main window, with right-padding. */
+.lefthalf{
+    width: 396px;
+    float: left;
+    padding-right: 4px;
+}
+
+/* Right half of the main window, with left-padding.*/
+.righthalf{
+    width: 396px;
+    float: right;
+    padding-left: 4px;
+}
+/* Stat name of the attributes on the stats tab. */
+.statname {
+    width: 80px;
+    float: left;
+	color:white;
+}
+
+/* Stat number of the attributes on the stats tab. */
+.statnumber {
+    width: 60px;
+    text-align: center;
+    float: left;
+	color:white;
+}
+
+/* Stat comment of the attributes on the stats tab. */
+.statcomment {
+    width: 195px;
+    float: left;
+}
+
+.statsTitle{
+	font-family: "Sedgwick Ave Display";
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 2px black;
+	color:white;
+}
+/*
+  Built-in class:
+    # author: Name
+*/
+.byline {
+    font-style: italic;
+}
+
+/* Image logo. */
+.logo{
+    z-index: 2;
+    width: 169px;
+    height: 102px;
+    position: fixed;
+    top: 75px;
+    left: 366px;
+}
+
+
+.written-in-ink {
+
+    font-size: 9pt;
+    font-family: sans-serif;
+    text-align: center;
+    font-weight: 700;
+    position: relative;
+    display: block;
+    width: 110%;
+    background: #557D8B;
+    transition: color 0.6s, background 0.6s;
+    margin: 0;
+    padding-top: 6px;
+    padding-bottom: 20px;
+    height: 14px;
+}
+
+
+/* 
+  Enables <iframe> support work on itch.io when using mobile iOS
+*/
+.outerContainer {
+    position: fixed;
+    display: block;
+    margin: 0;
+    padding: 0;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+	overflow-y: auto;
+    height: 92%;
+    width: 75%;
+    top: 50px;
+    left: 0;
+    background:#557D8B;
+    background-size: cover;
+    background-repeat: no-repeat;
+	left: 250px;
+}
+
+
+/* The scrollbar of the main container. */
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #2F444C; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #557D8B; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #557D8B;
+}  
+.container {
+
+	position: relative;
+    display: block;
+    max-width: 100%;
+	height:70%;
+	margin-left: 400px;
+    padding: 20px;
+    padding-top: 4em;
+	padding-bottom: 4em;
+    background: #2F444C;
+
+}
+
+.switched .container {
+    transition: background-color 1s;
+}
+
+p {
+    font-size: 14pt;
+    color: white;
+    line-height: 1.7em;
+    font-weight: lighter;
+	padding-left:64px;
+	padding-right:64px;
+}
+
+a {
+    font-weight: 700;
+    color: white;
+    font-family: sans-serif;
+    transition: color 0.6s;
+    text-decoration: none;
+	display: block;
+}
+
+.uibutton:hover{
+    border-width: 2px; 
+    border-color: black;      /* Background */
+    border-style: solid;
+}
+
+.warningtext{
+    color: #BE2625;             /* Danger */
+}
+.sneakytext{
+    color: #C0C0C0;             /* Sneaky */ 
+}
+/* Everything left of the main view. */
+.leftbar{
+    width: 300px;
+    height: 100%;
+    position: fixed;
+    left: 309px;
+    top: 183px;
+    user-select: none;
+}
+
+/* Panel containing logo image and logo text. */
+.logopanel{
+    width: 300px;
+    height: 180px;
+	left:300px;
+	top:40px;
+}
+
+
+/* Text to the right of logo. */
+.logotext{
+    width: 200px;
+    height: 80px;
+    position: absolute;
+    top: 20px;
+    left: 100px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 30px;
+    font-family: "Sedgwick Ave Display";
+	text:
+}
+
+/* Panel containing tab buttons. */
+.tabpanel{
+    width: 300px;
+    height: 532px;
+	top: 236px;
+    margin-top: 5px;
+    text-align: center;
+	position: fixed;
+	bottom: 150px;
+	left:308px;
+}	
+
+/* Tab button. */
+.tab{
+    width: 300px;
+    height: 64px;
+    margin-bottom: 15px;
+    border: 0px;
+    font-size: 30px;
+    color: white;               /* Text */
+    border-radius: 30px 30px 30px 30px;
+    background-color: #2F444C;  /* Main */
+    transition: background-color 0.6s ease;
+    position: relative; /* Enables blinking */
+	bottom:0px;
+    overflow: hidden;
+}
+
+/* Tab button onhover. */
+.tab:hover{
+    border-width: 4px 0px 3px 0px;
+    border-color: #218374;        /* Text */
+    border-style: solid;
+}
+
+
+strong {
+    color: black;
+    font-weight: bold;
+}
+
+img {
+    display: block;
+	margin: 0 auto;
+    max-width: 100%;
+}
+
+
+
+.inventory-image {
+    display: block;
+	margin: 0;
+    max-width: 100%;
+}
+
+.container .hide {
+    opacity: 0.0;
+}
+
+.container .invisible {
+    display: none;
+}
+
+.container>* {
+    opacity: 1.0;
+    transition: opacity 1.0s;
+}
+.nomargin{
+    margin-bottom: 0px !important;
+}
+/*
+  Class applied to all choices
+  (Will always appear inside <p> element by default.)
+*/
+.choice {
+    position: relative;
+	width: 400px;
+	text-align: center;
+    line-height: 1.7em;
+	margin: 12px 15px;
+	font-weight: normal;
+	font-size: 1rem;
+	background: #557D8B;
+	color: white;
+	padding: 15px;
+	left:30px;
+	
+}
+
+/* 
+  Class applied to first choice
+*/
+:not(.choice)+.choice {
+
+}
+.choice:hover{
+	border-style: solid;
+	border-width: 3px;
+	border-color: #218374;
+
+	background:#749BAA;
+	
+}
+
+
+/*
+  Class applied to choice links
+*/
+.choice a {
+    font-size: 15pt;
+}
+
+/* 
+  Built-in class:
+    The End # CLASS: end
+*/
+.end {
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+/* Button panel containing the four buttons at the bottom left. */
+.buttonpanel{
+    margin-top: 15px;
+    text-align: center;
+    left: 321px;
+    top: 775px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    bottom: 200px;
+    position: fixed;
+}
+/* One of the four buttons at the bottom left. */
+.uibutton{
+    width: 135px;
+    height: 35px;
+    margin-bottom: 5px;
+    border-radius: 30px;
+    background-color: #2F444C;  /* Main */
+    color: white;               /* Text */
+    border: 0px;
+    font-family: 'Interface';
+    font-size: 16px;
+    cursor: pointer;
+	bottom:0px;
+	left:145px;
+	position: sticky;
+}
+
+#controls {
+    z-index: 4;
+    font-size: 9pt;
+    text-align: center;
+    padding-bottom: 6px;
+    position: fixed;
+    right: 14px;
+    top: 0px;
+    user-select: none;
+    background: #557D8B;
+    transition: color 0.6s, background 0.6s;
+}
+
+#controls [disabled] {
+    color: #ccc;
+}
+
+#controls>*:not(:last-child):after {
+    content: " | ";
+}
+.formImg {
+    display: block;
+	margin: 0 auto;
+    width: 64px;
+	height: 64px;
+}
+
+@media screen and (max-width: 980px) {
+    #controls {
+        z-index: 2;
+        padding-top: 24px;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+}
+.volume-control {
+    margin: 20px;
+	bottom:45px;
+	position: fixed;
+}
+
+#volumeButton {
+	box-sizing: border-box;
+	width: 35px;
+    height: 35px;
+    margin-bottom: 5px;
+    background-color: #2F444C;  /* Main */
+    color: white;               /* Text */
+    border: 0px;
+    font-family: 'Interface';
+    font-size: 16px;
+    cursor: pointer;
+	bottom:0px;
+	left: 0px;
+}
+
+.playbutton{
+    margin: 20px;
+	bottom:5px;
+	position: fixed;
+}
+#playButton {
+	box-sizing: border-box;
+	width: 36px;
+    height: 36px;
+    margin-bottom: 5px;
+    background-color: #2F444C;  /* Main */
+    color: white;               /* Text */
+    border: 0px;
+    font-family: 'Interface';
+    font-size: 16px;
+    cursor: pointer;
+	bottom:0px;
+	left:0px;
+	
+}
+button img {
+    width: 35px;  /* Set the width */
+    height: 35px; /* Set the height */
+    display: block;
+}
+#volumeSlider {
+    position: absolute;
+    bottom: 133px;
+    transform: rotate(-90deg);
+    width: 200px;
+    left: -83px;
+	
+}
+
+/* Loading and saving throbber images. */
+.throbber img{
+    width: 100%;
+}
+
+/* Loading throbber position. */
+.loading{
+    right: 0px;
+    bottom: 0px;
+}
+
+/* Saving throbber position. */
+.saving{
+    right: 12px;
+    bottom: 0px;
+    height: auto;
+}
+
+/* Top right part of the save and load tabs. */
+.savelimit{
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: #C0C0C0;             /* Sneaky */
+}
+
+/* The control bar at the bottom of save/load tabs. */
+.savecontrolbar{
+    position: -webkit-sticky; /* Safari fix. */
+    position: sticky;
+    left: 0px;
+    top: 700px;
+    width: 100%;
+    height: 100px;
+    background-color: #557D8B;  /* Main */
+}
+
+.buttoncontrolbar{
+    position: -webkit-sticky; /* Safari fix. */
+    position: absolute;
+    left: 15px;
+	bottom: 145px;
+    width: 95%;
+    height: 100px;
+    background-color: #557D8B;  /* Main */
+}
+
+/* The left button on the control bar. */
+.saveleftbutton{
+    position: absolute;
+    width: 155px;
+    left: 50px;
+    bottom: 20px;
+    padding: 2px 15px !important;
+    font-size: 40px !important;
+    transition: background-color 0.4s ease;
+	background-color: #2F444C;
+	color: white; 
+}
+.leftbutton{
+    position: relative;
+    width: 155px;
+    left: 10px;
+    bottom: -25px;
+    padding: 2px 15px !important;
+    font-size: 40px !important;
+    transition: background-color 0.4s ease;
+	background-color: #2F444C;
+	color: white; 
+}
+
+
+/* Small button below the control bar. */
+.savesmallleftbutton{
+    width: 75px;
+    position: absolute;
+    left: 53px;
+    bottom: 3px;
+    font-size: 11px !important;
+    border-width: 1px !important;
+}
+
+/* Small button below the control bar. */
+.savesmallrightbutton{
+    width: 75px;
+    position: absolute;
+    left: 773px;
+    bottom: 3px;
+    font-size: 11px !important;
+    border-width: 1px !important;
+}
+
+/* The comment field in between the buttons on the save tab. */
+.savenewcommentfield{
+    position: absolute;
+    left: 24.5% !important;
+    bottom: 27px !important;
+}
+
+/* The right button on the control bar. */
+.saverightbutton{
+    position: absolute;
+    width: 155px;
+    right: 42px;
+    bottom: 20px;
+    padding: 2px 15px !important; 
+    font-size: 40px !important;
+    transition: background-color 0.4s ease;
+	background-color: #2F444C;
+	color: white; 
+}
+
+.loadrightbutton{
+    position: absolute;
+    width: 155px;
+    right: 200px;
+    bottom: 20px;
+    padding: 2px 15px !important; 
+    font-size: 40px !important;
+    transition: background-color 0.4s ease;
+	background-color: #2F444C;
+	color: white; 
+}
+
+/* The milestones button at the center of the load tab control bar. */
+.milestonebutton {
+    position: absolute;
+    width: 226px;
+    left: 333px;
+    bottom: 20px;
+    padding: 2px 15px !important; 
+    font-size: 40px !important;
+}
+
+/* The back button on the milestones tab. */
+.milestonebackbutton {
+    position: absolute;
+    width: 135px;
+    left: -20px;
+    top: -20px;
+    padding: 2px 15px !important; 
+    font-size: 26px !important;
+}
+
+/* The back button on the milestones tab. */
+.milestoneresetbutton {
+    position: absolute;
+    width: 80px;
+    right: -20px;
+    top: -20px;
+    padding: 2px 15px !important; 
+    font-size: 18px !important;
+}
+
+
+.savedraganddropoverlay{
+    position: -webkit-sticky; /* Safari fix. */
+    position: sticky;
+    height: 700px;
+}
+
+/* Save slot for both loading and saving tabs. */
+.saveslot{
+    width: 800px;
+    height: 100px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    position: relative;
+    background-color: #2F444C;   /* Background */
+    font-size: 20px;
+}
+
+/* Save slot for autosaves and new games. */
+.smallsaveslot{
+    width: 800px;
+    height: 42px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    position: relative;
+    background-color: #2F444C;   /* Background */
+    font-size: 20px;
+}
+
+/* Make it so you can't select anything in save slots. */
+.saveslot *, .smallsaveslot * {
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Class to be assigned to save slots when selected. */
+.saveslot:hover, .smallsaveslot:hover{
+    border-width: 2px;
+    border-style: solid;
+    border-color: #005AA1;    /* Detail */
+    width: 796px;
+    margin-bottom: 16px;
+}
+
+/* Class to be assigned to save slots when selected. */
+.saveslotselected{
+    border-width: 2px;
+    border-style: solid;
+    border-color: white !important;     /* Text */
+    width: 796px;
+    margin-bottom: 16px;
+}
+
+/* Save gender-background. */
+.savegender {
+    left: 50px;
+    max-height: 100%;
+    position: absolute;
+}
+
+/* Save gender-background for small saves. */
+.smallsaveslot .savegender {
+    left: 110px;
+}
+
+/* Save number. */
+.saverank {
+    top: 5px;
+    left: 10px;
+    position: absolute;
+}
+
+/* Save time ago. */
+.savetimestamp {
+    top:5px;
+    right: 10px;
+    position: absolute;
+}
+
+/* Save character name. */
+.savename {
+    top: 5px;
+    right: 0px;
+    width: 40%;
+    position: absolute;
+    text-align: left;
+}
+
+/* Save scene. */
+.savescene {
+    top: 5px;
+    left: 15%;
+    width: 40%;
+    position: absolute;
+    text-align: center;
+}
+
+/* Save comment. Text box. */
+.savecomment {
+    bottom: 15px;
+    left: 33%;
+    position: absolute;
+    font-family: "MonoInput";
+    overflow: hidden;
+    background-color: transparent;
+    color: white;               /* Text */
+    font-size: 16px;
+    resize: none;
+}
+
+/* A block of milestones on the milestones page. */
+.milestoneblock {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+/* A single milestone on the milestones page. */
+.milestone {
+    width: 784px;
+    height: 24px;
+    padding: 3px;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 5px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 7px;
+    position: relative;
+    display: inline-block;
+    user-select: none;
+    background-color: #191919;      /* Background */
+}
+
+/* Half a milestone on the milestones page. */
+.milestonehalf {
+    width: 384px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 3px;
+}
+
+/* Extra bottom padding because something fucked up. */
+.milestonehalffix {
+    margin-bottom: 7px;
+}
+
+/* An unlocked milestone on the milestones page. */
+.milestoneunlocked {
+    background-color: #005AA1;      /* Detail */
+    border-color: #005AA1;          /* Detail */
+}
+
+/* A locked milestone on the milestones page. */
+.milestonelocked {
+    border-color: #191919;          /* Background */
+}
+
+/* The name of a milestone. */
+.milestonename {
+    line-height: 24px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 5px;
+    float: left;
+}
+
+/* The scene of a milestone. */
+.milestonescene {
+    line-height: 24px;
+    font-size: 14px;
+    padding-left: 15px;
+    float: left;
+}
+
+/* The hint of a milestone. */
+.milestonehint {
+    line-height: 24px;
+    font-size: 12px;
+    margin-right: 5px;
+    overflow: hidden;
+    text-align: right;
+    /*font-size: 12px;
+    margin-left: 15px;
+    float: left;*/
+}
+
+/* The image of an achievement. */
+.milestoneachievementthumbnail {
+    float: left;
+    margin-left: 20px;
+}
+
+/* The image of an achievement. */
+.milestoneachievementimage {
+    visibility: hidden;
+    position: absolute;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    margin-top: 6px;
+}
+
+.milestoneachievementimageright {
+    left: -420px;
+}
+
+.milestoneachievementimageleft {
+    left: -20px;
+}
+
+/* Make the images fade in and out. */
+.milestoneunlocked:hover .milestoneachievementimage {
+    visibility: visible;
+    opacity: 1 !important;
+}
+
+/* Make the load buttons fade in and out. */
+.milestoneunlocked:hover .milestoneloadbutton {
+    opacity: 1 !important;
+}
+
+/* Progress bar for milestones. */
+.milestonesprogress {
+    float: right;
+    width: 400px !important;
+    height: 30px !important;
+    margin-top: 6px;
+}
+
+/* Total progress bar for milestones. */
+.milestonestotalprogress {
+    width: 600px !important;
+    height: 40px !important;
+    margin-bottom: 50px;
+}
+
+/* Text for milestones total progress bar. */
+.milestonetotalprogresstextleft {
+    float: left;
+    font-size: 20px;
+    margin-top: 7px;
+    margin-left: 22px;
+    margin-right: 20px;
+    width: 55px;
+    text-align: center;
+}
+
+/* Text for milestones total progress bar. */
+.milestonetotalprogresstextright {
+    float: right;
+    font-size: 20px;
+    margin-top: 7px;
+    margin-right: 12px;
+    width: 75px;
+    text-align: center;
+}
+
+/* Text for milestones progress bars. */
+.milestoneprogresstext {
+    float: right;
+    font-size: 20px;
+    margin-top: 7px;
+    margin-left: 20px;
+}
+
+.button:hover{
+   	border-style: solid;
+	border-width: 3px;
+	border-color: #218374;
+
+	background:#749BAA;
+	
+}
+
+.button:active{
+    background-color: #191919;  /* Background */
+    transition: all 0.2s ease;
+}
+
+.button:disabled{
+    background-color: #191919;  /* Background */
+    border-color: #003C6C;      /* Main */
+    transition: all 1s ease;
+}
+
+.save-slots-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Style for Save Slot */
+.save-slot {
+	width: 1000px;
+	height: 40px;
+	background-color: #557D8B; /* Change the background color */
+    color: white; /* Change the text color */
+    padding: 10px; /* Adjust padding as needed */
+    margin: 5px; /* Adjust margin as needed */
+    cursor: pointer; /* Change cursor style on hover */
+    border: 1px solid #2F444C; /* Add border */
+    border-radius: 5px; /* Add border radius */
+}
+.save-slot:hover {
+    background-color: #f0f0f0;
+}
+
+.fade-in-out {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 70%; /* Set a fixed width */
+  height: 100%; /* Set a fixed height */
+  transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+}
+
+.fade-in-out.show {
+  opacity: 1;
+  visibility: visible;
+  
+}
+
+
+.scrollable {
+      overflow-x: hidden;
+	  height: 100vh; /* Adjust the height as needed */
+    }
+
+
+.save-info {
+    /* Add your save info styles here */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    position: relative;
+}
+
+.save-info p {
+    /* Add styles for all <p> elements within save-info */
+    margin: 5px 0; /* Add some margin between paragraphs */
+}
+
+.save-info p.level {
+    /* Style the Level <p> element */
+    position: absolute;
+	bottom: 0; /* Position at the bottom */
+    right: 0; /* Position at the right */
+
+}
+
+.save-info p.location {
+    /* Style the Location <p> element */
+    position: absolute;
+	top: 10px; /* Position at the top */
+    right: 0; /* Position at the right */
+}
+.save-slot.selectedSlot {
+    /* Add your styling for the "glow" effect */
+    border: 3px solid #218374;;
+    /* Add any additional styling as needed */
+}
+
+
+#pinventory {
+  max-width: 600px;
+  max-height: 600px;
+  margin: 20px auto;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #557D8B;
+  overflow-y: auto;
+  position: relative;
+}
+
+#pequipment {
+  max-width: 600px;
+  max-height: 600px;
+  margin: 20px auto;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #557D8B;
+  overflow-y: auto;
+  position: relative;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+
+.header{
+position: relative;
+left: 34px;
+width: 96%;
+}
+
+.header span {
+  display: inline-block;
+  width: 160px;
+  font-weight: bold;
+  font-family: Sedgwick Ave Display;
+  color:white
+}
+span{
+width:155px;
+display: inline-block;
+margin-bottom:5px;
+  text-align: center; /* Center the text within the span */
+  color:white
+  
+}
+
+
+
+button {
+  cursor: pointer;
+}
+
+
+
+
+.sellrightbutton{
+    position: absolute;
+    width: 155px;
+    right: 90px;
+    bottom: 140px;
+    padding: 2px 15px !important; 
+    font-size: 40px !important;
+    transition: background-color 0.4s ease;
+	background-color: #2F444C;
+	color: white; 
+}
+.itemrightbutton{
+    position: absolute;
+    width: 155px;
+    right: 280px;
+    bottom: 140px;
+    padding: 2px 15px !important; 
+    font-size: 40px !important;
+    transition: background-color 0.4s ease;
+	background-color: #2F444C;
+	color: white; 
+}
+
+@media screen and (max-width: 980px) {
+	
+.outerContainer {
+    position: fixed;
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: 93%;
+    width: 100%;
+	overflow-y: auto;
+    top: 0px;
+    background:#557D8B;
+    background-size: cover;
+    background-repeat: no-repeat;
+	left: 10px;
+}
+
+.container {
+    position: relative; /* Position relative to .outerContainer */
+    display: block;
+    height: 100%;
+    width: 100%;
+	padding: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+    padding-top: 0em;
+    padding-bottom: 0em;
+    background: #2F444C;
+    top: 0; /* Adjust top value as needed */
+}
+
+
+
+.fade-in-out {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: -25px;
+  overflow-y: auto;
+  width: 55%; /* Set a fixed width */
+  height: 100%; /* Set a fixed height */
+  transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+}
+
+.fade-in-out.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.leftbar {
+    width: 42%;
+    height: 100%;
+    position: absolute;
+    left: 0px; /* Adjusted left */
+    top: 0px;
+    user-select: none;
+}
+
+.tabpanel {
+    width: 25%;
+    height: 15%;
+    top: 40px;
+    margin-top: 5px;
+    text-align: center;
+    position: fixed;
+    bottom: 150px;
+    left: 65px; /* Adjusted left */
+}
+
+/* Tab button. */
+.tab{
+    width: 75%;
+    height: 50%;
+    margin-bottom: 5px;
+    border: 0px;
+    font-size: 25px;
+    color: white;               /* Text */
+    border-radius: 30px 30px 30px 30px;
+    background-color: #2F444C;  /* Main */
+    transition: background-color 0.6s ease;
+    position: relative; /* Enables blinking */
+	bottom:0px;
+    overflow: hidden;
+}
+
+/* Tab button onhover. */
+.tab:hover{
+    border-width: 4px 0px 3px 0px;
+    border-color: #218374;        /* Text */
+    border-style: solid;
+	/* The scrollbar of the main container. */
+}
+
+.title{
+	z-index:1;
+    display:block;
+	position: fixed;
+	font-family: Sedgwick Ave Display;
+    font-size: 20px;
+    margin-bottom: 25px;
+	color:white;
+	left: 125px;
+	top: 10px;
+text-shadow: 1px 1px 2px black;}
+
+.logo{
+    z-index: 2;
+    width: 0px;
+    height: 0px;
+    position: fixed;
+    top: 0px;
+    left: 145px;
+}
+
+.uibutton{
+    width: 110px;
+    height: 25px;
+    margin-bottom: 3px;
+    border-radius: 30px;
+    background-color: #2F444C;  /* Main */
+    color: white;               /* Text */
+    border: 0px;
+    font-family: 'Interface';
+    font-size: 16px;
+    cursor: pointer;
+	bottom:0px;
+	left:145px;
+}
+.buttonpanel{
+    margin-top: 15px;
+    text-align: center;
+	top: 200px;
+    left: 75px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    bottom: 150px;
+    position: fixed;
+}
+
+/* Half of the main window. */
+.half{
+	margin-left: 0px;
+    width: 255px;
+    float: left;
+	
+}
+
+/* Left half of the main window, with right-padding. */
+.lefthalf{
+    width: 396px;
+    float: left;
+    padding-right: 4px;
+}
+
+/* Right half of the main window, with left-padding.*/
+.righthalf{
+    width: 396px;
+    float: right;
+    padding-left: 4px;
+}
+/* Stat name of the attributes on the stats tab. */
+.statname {
+    width: 80px;
+    float: left;
+	color:white;
+}
+
+/* Stat number of the attributes on the stats tab. */
+.statnumber {
+    width: 60px;
+    text-align: center;
+    float: left;
+	color:white;
+}
+
+/* Stat comment of the attributes on the stats tab. */
+.statcomment {
+    width: 105px;
+    float: left;
+}
+
+.statsTitle{
+	font-family: "Sedgwick Ave Display";
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 0px;
+	height:50px;
+    text-shadow: 1px 1px 2px black;
+	color:white;
+}
+
+
+.EquipmentName{
+	font-family: "Sedgwick Ave Display";
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 0px;
+	height:50px;
+    text-shadow: 1px 1px 2px black;
+	color:white;
+}
+
+.InventoryName{
+	font-family: "Sedgwick Ave Display";
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 0px;
+	height:50px;
+    text-shadow: 1px 1px 2px black;
+	color:white;
+}
+
+
+.subtitle{
+    font-size: 28px;
+	text-align:left;
+    margin-top: 4px;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 2px black; /* Text-shadow */
+	margin-left: 20px;
+}
+
+.healthbar {
+    margin-left: 0px;
+    width: 480px;
+    height: 18px;
+    border-color: #191919;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 43px 0px 20px 0px;
+    overflow: hidden;
+
+}
+.healthbarnumber {
+	color:white;
+}
+/* Inner status tab healthbar. */
+.healthbarinner {
+    height: 100%;
+}
+.healhbarcomment {
+    width: 205px;
+    float: left;
+    text-align: left;
+    margin-left: 0px;
+}
+
+
+.choice:hover{
+	border-style: solid;
+	border-width: 3px;
+	border-color: #218374;
+
+	background:#749BAA;
+	
+}
+
+.choice {
+    position: relative;
+	width: 150px;
+	text-align: center;
+    line-height: 1.7em;
+	margin: 12px 15px;
+	font-weight: normal;
+	font-size: 1rem;
+	background: #557D8B;
+	color: white;
+	padding: 15px;
+	left:30px;
+	
+}
+
+/*
+  Class applied to choice links
+*/
+.choice a {
+    font-size: 12pt;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #2F444C; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #557D8B; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #557D8B;
+}  
+}
+
+
+
+.formImg {
+	position: relative;
+	margin: 0;
+    width: 275px;
+	height: 275px;
+	 display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row; /* Set to row for horizontal arrangement */
+}
+
+.image-container {
+ position:absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  max-width: 91%;
+  height:65%;
+}
+
+.image-container > div {
+  flex: 1; /* Each child takes equal space */
+  margin: 10px; /* Add margin between containers */
+  max-width: calc(50% - 20px); /* Maximum width for each container */
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+.chooseButton{
+    padding: 2px 15px !important;
+    font-size: 20px !important;
+    transition: background-color 0.4s ease;
+	background-color: #2F444C;
+	color: white; 
+}
+
+/* Show class for buttons */
+.chooseButton.show {
+    display: block;
+}
+
+.IMGfade-in-out {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 113px;
+  left: 0;
+  width: 91%; /* Set a fixed width */
+  height: 65%; /* Set a fixed height */
+  transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+}
+
+.IMGfade-in-out.show {
+  opacity: 1;
+  visibility: visible;
+  
+}
+.highlight {
+   	border-style: solid;
+	border-width: 3px;
+	border-color: #218374;
+
+	background:#749BAA;
+}
+}
+

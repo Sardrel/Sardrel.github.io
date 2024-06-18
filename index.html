@@ -1,0 +1,229 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+
+
+    <meta charset="utf-8">
+
+    <title>Pony Adventure</title>
+	<link rel="shortcut icon" href="IMAGE/MLP Symbol.png" type="image/x-icon">
+	<link rel="icon" href="IMAGE/MLP Symbol.png" type="image/x-icon">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+	
+<body>
+	<div class= "title" id="logop">Pony Adventure</div>
+    <div class="outerContainer">
+	<audio id="myAudio" src="Music\Canterhorn\Main Theme.mp3" autoplay loop > </audio>
+      
+
+        <div id="story" class="container fade-in-out show scrollable">
+		
+		
+            <div class="header">
+                <h1>Welcome to Pony Adventure</h1>
+                <h2 class="byline"></h2>
+            </div>
+        </div>
+		<div id="stats" class="container fade-in-out ">
+		<div class="statsTitle">Stats</div>
+		<h2 class="subtitle">Attributes</h2>
+		<div class="half">
+
+		<div class="statname">
+		<div class="p nomargin">Strength</div>
+		<div class="p nomargin">Dexterity</div>
+		<div class="p">Constitution</div></div>
+		<div class="statnumber">
+		<div class="p nomargin" id="StrengthNum">10</div>
+		<div class="p nomargin" id="DexterityNum">10</div>
+		<div class="p" id="ConstitutionNum">10</div></div>
+		<div class="statcomment">
+		<div class="p nomargin sneakytext" id="StrengthComment">Average.</div>
+		<div class="p nomargin sneakytext" id="DexterityComment">Average.</div>
+		<div class="p sneakytext"id="ConstitutionComment">Average.</div>
+		</div>
+		</div>
+		<div class="statname">
+		<div class="p nomargin">Intelligence</div>
+		<div class="p nomargin">Wisdom</div>
+		<div class="p">Charisma</div></div>
+		<div class="statnumber">
+		<div class="p nomargin" id="IntelligenceNum">10</div>
+		<div class="p nomargin" id="WisdomNum">10</div>
+		<div class="p"id="CharismaNum">10</div>
+		</div>
+		<div class="statcomment">
+		<div class="p nomargin sneakytext" id="IntelligenceComment">Average.</div>
+		<div class="p nomargin sneakytext"id="WisdomComment">Average.</div>
+		<div class="p sneakytext"id="CharismaComment">Average.</div></div>
+		</div>
+		
+		<div id="status" class="container fade-in-out">
+		<div class="statsTitle">Status</div>
+		<h2 class="subtitle">Health</h2>
+		<div class="healthbar">
+		<div class="healthbarinner health"id="healthBar" style="width: 100%;">
+		</div>
+		</div>
+		<div class="text healhbarcomment">
+		<span class="sneakytext">Feeling fine.</span>
+		</div>
+		<div class="text healthbarnumber bold" id="healthNum">100/100</div>
+		<h2 class="subtitle">Will</h2>
+		<div class="healthbar">
+		<div class="healthbarinner will" id="willBar" style="width: 100%;">
+		</div>
+		</div>
+		<div class="text healhbarcomment">
+		<span class="sneakytext">Clear of Mind.</span>
+		</div>
+		<div class="text healthbarnumber bold"id="willNum">100 / 100</div>
+		<h2 class="subtitle">Libido</h2>
+		<div class="healthbar">
+		<div class="healthbarinner libido" id="libidoBar" style="width: 0%;">
+		</div>
+		</div>
+		<div class="text healhbarcomment">
+		<span class="sneakytext">Chaste.</span>
+		</div>
+		<div class="text healthbarnumber bold" id="libidoNum"> 0 / 100</div>
+		<h2 class="subtitle">Experienece</h2>
+		<div class="healthbar">
+		<div class="healthbarinner xp"id="xpBar" style="width: 0%;">
+		</div>
+		</div>
+		<div class="text healhbarcomment">
+		<span class="sneakytext">Experience.</span>
+		</div>
+		<div class="text healthbarnumber bold"id="xpNum"> 0 / 100</div>
+		</div>
+		<div id="inventory" class="container fade-in-out" >
+			<div class="statsTitle">Equipment</div>
+			<div id="pequipment">
+			<ul id="equippedItems"></ul>
+			</div>
+		<div class="statsTitle">Inventory </div>
+		<ul id="shopItemsList"></ul>
+		 <div id="pinventory">
+		<li class="header">
+		
+      <span>Name</span>
+      <span>Description</span>
+      <span>QTY</span>
+	  <span></span>
+		</li>
+		<ul id="items"></ul>
+
+        </div>       
+		</div>
+			<div id="shop" class="container fade-in-out" >
+		<h2>You shouldn't see this at all</h2>
+			<ul id="shopItems"></ul>
+		</div>
+	
+		<div id="spells" class="container fade-in-out" >
+		<h2>This is Place Holder for Spells</h2>
+		
+		</div>
+		<div id="save" class="container fade-in-out" >
+		
+		
+		<div class="content" id="content"><div class="statsTitle">Save</div>
+		<div id="saveSlotsContainer" class="save-slots-container">
+        <!-- Save slots will be rendered here dynamically -->
+		</div>
+		<div class="savecontrolbar">
+                    <button class="button saveleftbutton warning" id="deletebutton" >Delete</button>
+                    <textarea rows="2" cols="55" maxlength="114" class="savecomment savenewcommentfield" placeholder="Comment. Old comment if left blank." id="newcomment"></textarea>
+                    <button class="button saverightbutton" id="saveButton" >Save</button style>
+					<button class="button loadrightbutton" id="loadButton" >Load</button>
+                            </div>
+		</div>
+		</div>
+		<div id="forms" class="container fade-in-out" >		
+		<div class="content" id="content"><div class="statsTitle">Forms</div>
+			</div>	
+	
+		<div id="ponyContainer" class="image-container IMGfade-in-out">
+			
+		
+		 <img src="IMAGE\Characters\Player Character\Earth Pony Form.png" alt="Terran" class="formImg">
+		 <button class= "chooseButton">Terran</button>
+		 <img src="IMAGE\Characters\Player Character\Pegasus Form.png" alt="Pegasus" class="formImg">
+		 <button class= "chooseButton" >Pegasus</button>
+		 <img src="IMAGE\Characters\Player Character\Unicorn Form.png" alt="Unicorn" class="formImg">
+		 <button class= "chooseButton" >Unicorn</button>
+		<img src="IMAGE\Characters\Player Character\Batpony Form.png" alt="Chiropterran" class="formImg">
+		<button class="chooseButton" >Chiropterran</button>
+		</div>
+		<div id="zebraContainer" class="image-container IMGfade-in-out">
+		 <img src="IMAGE\Characters\Player Character\Mpatanishi form.png" alt="Mpatanishi" class="formImg">
+		 <button class= "chooseButton">M'patanishi</button>
+		 <img src="IMAGE\Characters\Player Character\Mponyaji form.png" alt="Mponyaji" class="formImg">
+		 <button class= "chooseButton">M'ponyaji</button>
+		 
+		 <img src="IMAGE\Characters\Player Character\Shujaa form.png" alt="Shujaa" class="formImg">
+		 <button class= "chooseButton" >Shujaa</button>
+
+		</div>
+		
+
+		<div class="buttoncontrolbar">
+        <button class="button leftbutton highlight " id="ponybutton" >Pony</button>
+		<button class="button leftbutton " id="zebrabutton" >Zebra</button>
+                            </div>
+	
+		</div>
+  <div class="leftbar">
+
+                <div class="logopanel">
+                    <img class="logo" alt="logo" src="IMAGE/MLP Symbol.png">
+                </div>
+				<div class="buttonpanel">
+                   
+					<a target="_blank" href="credits/credits.html">
+                        <button class="uibutton" id="creditsbutton">Credits</button>
+                    </a>
+                    <a target="_blank" href="https://www.patreon.com/user?u=65513562">
+                        <button class="uibutton" id="patreonbutton">Patreon</button>
+					</a>
+
+					 <a target="_blank" href="https://discord.gg/rD7Sba2FMF">
+                        <button class="uibutton" id="discordbutton">Discord</button>
+					</a>
+					<a>
+					<button class="uibutton" id="rewind" title="Restart story from beginning">Restart</button>
+					</a>
+					</div>
+                <div class="tabpanel">
+                    <button class="tab tabactive" id="scenetab">Scene</button>
+                    <button class="tab" id="statstab">Stats</button>
+                    <button class="tab" id="statustab">Status</button>
+                    <button class="tab" id="inventorytab">Inventory</button>
+					<button class="tab" id="spellstab" style="display: none">Spells</button>
+                    <button class="tab" id="savetab">Save</button>           
+					<button class="tab" id="formtab" style="display:none;">Shapechange</button>
+                </div>
+
+   </div>
+
+<div class="volume-control">
+    <button id="volumeButton"><img src="IMAGE\Icon\Volume Icon.png" alt="Volume"></button>
+	<input type="range" id="volumeSlider" min="0" max="1" value=".5" step ="0.01" style="display: none;">
+	</div>
+	<div class="playbutton">
+	<button id="playButton"> <img id="buttonImage" src="IMAGE\Icon\Play Button.gif"></button>
+	</div>
+
+</div>    
+</div>
+	<script src="ink.js"></script>
+    <script src="Pony Quest.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
