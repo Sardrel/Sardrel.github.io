@@ -2,7 +2,7 @@
 
     // Create ink story from the content using inkjs
     var story = new inkjs.Story(storyContent);
-const currentVersion = 'v3';  // Change this version number when you update your code
+const currentVersion = 'v6';  // Change this version number when you update your code
 const storedVersion = localStorage.getItem('appVersion');
 story.BindExternalFunction("get_name", () => {
     // 'prompt' is a built-in Javascript method
@@ -21,9 +21,26 @@ story.BindExternalFunction("get_name", () => {
     return playerName;
 });
 
+story.BindExternalFunction("get_furColor", () => {
+    // 'prompt' is a built-in Javascript method
+    let furColor = prompt("Choose your fur color", "brown");
+
+    // Check if playerName is null or empty
+    if (furColor === null || furColor === "") {
+        // Set a default name if the player doesn't enter anything
+        furColor = "brown";
+    }
+
+    // Set the playerName in story.variablesState
+    story.variablesState["furColor"] = furColor;
+
+    // Return the playerName
+    return furColor;
+});
 	
-	let playerName = 'Anon'
-		let currentLocation = "Nowhere"
+		let playerName = 'Anon';
+		let furColor = 'brown';
+		let currentLocation = "Nowhere";
 		let currentLevel = 1;
 		let currentHp = 0;
 		let maxHp = 0;
@@ -36,7 +53,13 @@ story.BindExternalFunction("get_name", () => {
 	    let Attack_Mod = 0
 		let hasWings = false;
 		let hasMagic = false;
-		function percent(x,y){
+		let strength = 10;
+		let dexterity = 10;
+		let constitution = 10;
+		let intelligence = 10;
+		let wisdom = 10;
+		let charisma = 10;
+function percent(x,y){
 			return (x/y)*100;
 		};
 // Function to roll a specified-sided die
@@ -917,7 +940,7 @@ if (storedVersion !== currentVersion) {
         });
 
 	
-	let currentSlotIndex = 0;
+	let currentSlotIndex = parseInt(localStorage.getItem('currentSlotIndex')) || 0;
 	let dummySlotClicked = localStorage.getItem('dummySlotClicked') === 'true' || false;
 	let savedSlots = JSON.parse(window.localStorage.getItem('save-slots')) || [];
 	let selectedSaveIndex = null;
@@ -926,10 +949,17 @@ if (storedVersion !== currentVersion) {
     const loadButton = document.getElementById("loadButton");
 	const deleteSelectedSaves = document.getElementById("deletebutton");
 	const saveSlotsContainerLoad = document.getElementById("saveSlotsContainerLoad");
+	
+	if (isNaN(currentSlotIndex)) {
+    currentSlotIndex = 0; // Fallback to 0 if it couldn't be parsed correctly.
+}
+
     saveButton.addEventListener("click", function() {
+		
         // Replace 0 with the desired slot index
-      if (selectedSaveIndex !== null) {
+    if (selectedSaveIndex !== null) {
     const savingToNewSlot = selectedSaveIndex !== currentSlotIndex;
+	
     saveGameSlot(selectedSaveIndex);
     if (savingToNewSlot) {
 		removeNullFromArray(savedSlots);
@@ -950,6 +980,11 @@ if (storedVersion !== currentVersion) {
 		hideAllPages();
 		page1.classList.add("show");
 		document.querySelector('.outerContainer').style.overflowY = 'auto';
+		const outerContainer = document.querySelector('.outerContainer');
+    outerContainer.scrollTo({
+        top: outerContainer.scrollHeight,
+        behavior: 'smooth' // Optional: adds smooth scrolling
+    });
 		}
     });
 deleteSelectedSaves.addEventListener("click", function() {
@@ -1009,6 +1044,7 @@ dummySaveSlot.addEventListener("click", () => {
         localStorage.setItem('currentSlotIndex', currentSlotIndex);
         localStorage.setItem('dummySlotClicked', dummySlotClicked);
 		
+		
     }
     });
     saveSlotsContainer.appendChild(dummySaveSlot);
@@ -1024,10 +1060,15 @@ saveInfo.classList.add("save-info");
 
 const slotParagraph = document.createElement("p");
 slotParagraph.textContent = `Slot: ${index + 1}`;
+slotParagraph.classList.add("slot");
 
 const levelParagraph = document.createElement("p");
 levelParagraph.textContent = `Level: ${save.currentLevel}`;
 levelParagraph.classList.add("level"); // Add a class for styling
+
+const saveNameParagraph = document.createElement("p");
+saveNameParagraph.textContent = `Save Name: ${save.saveName}`;
+saveNameParagraph.classList.add("saveName"); // Add a class for styling
 
 const locationParagraph = document.createElement("p");
 locationParagraph.textContent = `Location: ${save.currentLocation}`;
@@ -1044,6 +1085,8 @@ function clearSelectedSlots() {
 		saveInfo.appendChild(slotParagraph);
 		saveInfo.appendChild(levelParagraph);
 		saveInfo.appendChild(locationParagraph);
+		saveInfo.appendChild(saveNameParagraph);
+		
         // Add click event to load the selected save
         saveSlot.addEventListener("click", () => {
 			 clearSelectedSlots();
@@ -1052,7 +1095,6 @@ function clearSelectedSlots() {
 			 saveSlot.classList.add('selectedSlot');
 			 if(dummySlotClicked){
 			 dummySlotClicked = false;
-			 currentSlotIndex -= 1
 			 }
         });
 		saveSlot.appendChild(saveInfo);
@@ -1083,18 +1125,44 @@ function saveGameSlot(currentSlotIndex) {
             }
         });
 
-        console.log("Saved elements data:", elementsData);
+
+        console.log("Saved elements data:", elementsData);	
+		
+		let saveName = prompt("Enter a name for this save:");
+        
+        // If no name is entered, stop and return, preventing the currentSlotIndex from being modified
+        if (!saveName) {
+            console.log("Save cancelled. No save name entered.");
+			
+            return; // Prevents saving and incrementing currentSlotIndex
+        }
+		
         // Save paragraph content and image sources in your savedSlots or any other data structure
         savedSlots[currentSlotIndex] = {
             state: currentState,
             elements: elementsData,
             currentLevel: currentLevel,
             currentLocation: currentLocation,
-			inventory: inventoryData
+            inventory: inventoryData,
+            currentHp: currentHp,
+            will: will,
+            maxWill: maxWill,
+            maxHp: maxHp,
+            lust: lust,
+            currentXp: currentXp,
+            needXp: needXp,
+			strength: strength,
+			dexterity: dexterity,
+			constitution: constitution,
+			intelligence: intelligence,
+			wisdom: wisdom,
+			charisma: charisma,
+			saveName: saveName,
         };
 
         window.localStorage.setItem('save-slots', JSON.stringify(savedSlots));
         console.log(`Game saved to Slot ${currentSlotIndex + 1}`);
+
     } catch (e) {
         console.error("Couldn't save game state", e);
     }
@@ -1112,12 +1180,26 @@ function loadSaveSlot(currentSlotIndex) {
             if (savedData && savedData.elements) { // Ensure 'elements' property is defined
                 let savedState = savedData.state;
                 let elementsData = savedData.elements;
-				let inventoryData = savedData.inventory
+				let inventoryData = savedData.inventory;
+				let currentHp = savedData.currentHp;
+				let will = savedData.will;
+				let maxWill = savedData.maxWill;
+				let maxHp = savedData.maxHp;
+				let lust = savedData.lust;
+				let currentXp = savedData.currentXp;
+				let needXp = savedData.needXp;
+				let strength = savedData.strength;
+				let dexterity = savedData.dexterity;
+				let constitution = savedData.constitution;
+				let intelligence = savedData.intelligence;
+				let wisdom = savedData.wisdom;
+				let charisma = savedData.charisma;
+				
 
                 // Log the loaded state and elements data for debugging
                 console.log("Loaded state:", savedState);
                 console.log("Loaded elements data:", elementsData);
-				 console.log("Loaded inventory data:", inventoryData);
+				console.log("Loaded inventory data:", inventoryData);
 				 
                 // Restore the state and create new elements within the 'story' div
 				let imageContainer = document.getElementById("story");
@@ -1129,10 +1211,20 @@ function loadSaveSlot(currentSlotIndex) {
 				
 				  // Load the inventory data
                 inventory = JSON.parse(inventoryData);
+				
 
                 // Assuming you have a function to update the inventory UI
                 updateInventoryUI();
-
+				updateWillUI(will, maxWill);
+				updateHpUI(currentHp, maxHp);
+				updateStrText(strength);
+				updateDexText(dexterity);
+				updateConText(constitution);
+				updateIntText(intelligence);
+				updateWisText(wisdom);
+				updateChaText(charisma);
+				
+				
                 // Assuming you have a function to continue the story
                 continueStory(true);
 
@@ -1207,8 +1299,14 @@ function removeAll(selector) {
 	// Define event listeners and their corresponding actions
 	btnShowPage1.addEventListener("click", function() {
 	hideAllPages();
+	const outerContainer = document.querySelector('.outerContainer');
+    outerContainer.scrollTo({
+        top: outerContainer.scrollHeight,
+        behavior: 'smooth' // Optional: adds smooth scrolling
+    });
 	page1.classList.add("show");
 	document.querySelector('.outerContainer').style.overflowY = 'auto';
+	
 	});
 
 	btnShowPage2.addEventListener("click", function() {
@@ -1352,6 +1450,7 @@ function showImages(containerId) {
 
 	// Stats
 		story.ObserveVariable("strength", function(variableName, variableValue) {
+			strength = variableValue;
 			document.getElementById("StrengthNum").innerText = variableValue
 			if (variableValue === 1) {document.getElementById("StrengthComment").innerText = "Morbidly Weak."}
 			else if (variableValue < 3) {document.getElementById("StrengthComment").innerText = "Watch out for strong winds."}
@@ -1367,6 +1466,7 @@ function showImages(containerId) {
 
 			});
 		story.ObserveVariable("dexterity", function(variableName, variableValue){
+			dexterity = variableValue;		
 			document.getElementById("DexterityNum").innerText = variableValue
 		if (variableValue === 1) {document.getElementById("DexterityComment").innerText = "Barely Mobile."}
 			else if (variableValue < 3) {document.getElementById("DexterityComment").innerText = "Painful Movement."}
@@ -1381,6 +1481,7 @@ function showImages(containerId) {
 			else if (variableValue === 20 ){document.getElementById("DexterityComment").innerText = "Swift as a River"}
 		});
 		story.ObserveVariable("constitution", function(variableName, variableValue){
+			constitution = variableValue;		
 			document.getElementById("ConstitutionNum").innerText = variableValue
 		if (variableValue === 1) {document.getElementById("ConstitutionComment").innerText = "Anemic."}
 			else if (variableValue < 3) {document.getElementById("ConstitutionComment").innerText = "Frail."}
@@ -1395,6 +1496,7 @@ function showImages(containerId) {
 			else if (variableValue === 20 ){document.getElementById("ConstitutionComment").innerText = "I can do this all day."}
 		});
 		story.ObserveVariable("intelligence", function(variableName, variableValue){
+			intelligence = variableValue;		
 			document.getElementById("IntelligenceNum").innerText = variableValue
 		if (variableValue === 1) {document.getElementById("IntelligenceComment").innerText = "Animalistic."}
 			else if (variableValue < 3) {document.getElementById("IntelligenceComment").innerText = "Rather Animalistic."}
@@ -1409,6 +1511,7 @@ function showImages(containerId) {
 			else if (variableValue === 20 ){document.getElementById("IntelligenceComment").innerText = "Famous Genius"}
 		});
 		story.ObserveVariable("wisdom", function(variableName, variableValue){
+			wisdom = variableValue;		
 			document.getElementById("WisdomNum").innerText = variableValue
 		if (variableValue === 1) {document.getElementById("WisdomComment").innerText = "Barely Aware."}
 			else if (variableValue < 3) {document.getElementById("WisdomComment").innerText = "Oblivious"}
@@ -1424,6 +1527,7 @@ function showImages(containerId) {
 		
 		});
 		story.ObserveVariable("charisma", function(variableName, variableValue){
+			charisma = variableValue;
 			document.getElementById("CharismaNum").innerText = variableValue
 		if (variableValue === 1) {document.getElementById("CharismaComment").innerText = "Repelling Presence."}
 			else if (variableValue < 3) {document.getElementById("CharismaComment").innerText = "Minimal Thought"}
@@ -1440,7 +1544,7 @@ function showImages(containerId) {
 		
 
 	//Status Bars
-		
+	
 		
 
 		story.ObserveVariable("health", function(variableName, newValue) {
@@ -1472,9 +1576,7 @@ function showImages(containerId) {
 		story.ObserveVariable("maxWill", function(variableName, newValue) {
 			maxWill = newValue;
 		});
-		
-		
-		
+				
 		story.ObserveVariable("xp", function(variableName, newValue) {
 			currentXp = newValue;
 			document.getElementById("xpNum").innerText = currentXp + " / "+ needXp;
@@ -1484,6 +1586,132 @@ function showImages(containerId) {
 		story.ObserveVariable("needxp", function(variableName, newValue) {
 			needXp = newValue;
 			});
+			
+			
+			function updateWillUI(will, maxWill) {
+				document.getElementById("willNum").innerText = will + " / " + maxWill;
+				const willPercent = percent(will, maxWill);
+				document.getElementById("willBar").style.width = `${willPercent}%`;
+			}
+
+			// Function to update HP UI
+			function updateHpUI(currentHp, maxHp) {
+				document.getElementById("healthNum").innerText = currentHp + " / " + maxHp;
+				const hpPercent = percent(currentHp, maxHp);
+				document.getElementById("healthBar").style.width = `${hpPercent}%`;
+			}
+
+			// Function to update Lust UI
+			function updateLustUI(lust) {
+				document.getElementById("libidoNum").innerText = lust;
+    
+				const lustPercent = percent(lust, 100);  
+				document.getElementById("libidoBar").style.width = `${lustPercent}%`;
+			}
+
+			// Function to update XP UI
+			function updateXpUI(currentXp, needXp) {
+				document.getElementById("xpNum").innerText = currentXp + " / " + needXp;
+				const xpPercent = percent(currentXp, needXp);
+				document.getElementById("xpBar").style.width = `${xpPercent}%`;
+			}
+
+
+		function updateStrText(strength){
+		document.getElementById("StrengthNum").innerText = strength
+		if (strength === 1) {document.getElementById("StrengthComment").innerText = "Morbidly Weak."}
+			else if (strength < 3) {document.getElementById("StrengthComment").innerText = "Watch out for strong winds."}
+			else if (strength < 5) {document.getElementById("StrengthComment").innerText = "Visibly weak."}
+			else if (strength < 7 ){document.getElementById("StrengthComment").innerText = "Not the strongest."}
+			else if (strength < 9 ){document.getElementById("StrengthComment").innerText = "Can make one cart trip."}
+			else if (strength < 11 ){document.getElementById("StrengthComment").innerText = "Average."}
+			else if (strength < 13 ){document.getElementById("StrengthComment").innerText= "Strong."}
+			else if (strength < 15 ){document.getElementById("StrengthComment").innerText = "Visibly toned."}
+			else if (strength < 17 ){document.getElementById("StrengthComment").innerText = "Muscular."}
+			else if (strength < 19 ){document.getElementById("StrengthComment").innerText = "Heavily Muscular"}
+			else if (strength === 20 ){document.getElementById("StrengthComment").innerText = "Pinnacle of brawn"}
+		};		
+		function updateDexText(dexterity){
+			document.getElementById("DexterityNum").innerText = dexterity
+		if (dexterity === 1) {document.getElementById("DexterityComment").innerText = "Barely Mobile."}
+			else if (dexterity < 3) {document.getElementById("DexterityComment").innerText = "Painful Movement."}
+			else if (dexterity < 5) {document.getElementById("DexterityComment").innerText = "Difficulty Moving."}
+			else if (dexterity < 7 ){document.getElementById("DexterityComment").innerText = "Total Klutz."}
+			else if (dexterity < 9 ){document.getElementById("DexterityComment").innerText = "Somewhat Slow."}
+			else if (dexterity < 11 ){document.getElementById("DexterityComment").innerText = "Average."}
+			else if (dexterity < 13 ){document.getElementById("DexterityComment").innerText= "Quick."}
+			else if (dexterity < 15 ){document.getElementById("DexterityComment").innerText = "Nimble."}
+			else if (dexterity < 17 ){document.getElementById("DexterityComment").innerText = "Light on your feet."}
+			else if (dexterity < 19 ){document.getElementById("DexterityComment").innerText = "Graceful"}
+			else if (dexterity === 20 ){document.getElementById("DexterityComment").innerText = "Swift as a River"}
+		};
+		
+		function updateConText(constitution){			
+			document.getElementById("ConstitutionNum").innerText = constitution
+		if (constitution === 1) {document.getElementById("ConstitutionComment").innerText = "Anemic."}
+			else if (constitution < 3) {document.getElementById("ConstitutionComment").innerText = "Frail."}
+			else if (constitution < 5) {document.getElementById("ConstitutionComment").innerText = "Brusied by a touch."}
+			else if (constitution < 7 ){document.getElementById("ConstitutionComment").innerText = "Prone to Illness."}
+			else if (constitution < 9 ){document.getElementById("ConstitutionComment").innerText = "Easily Winded."}
+			else if (constitution < 11 ){document.getElementById("ConstitutionComment").innerText = "Average."}
+			else if (constitution < 13 ){document.getElementById("ConstitutionComment").innerText= "Fortified."}
+			else if (constitution < 15 ){document.getElementById("ConstitutionComment").innerText = "Peak Physique"}
+			else if (constitution < 17 ){document.getElementById("ConstitutionComment").innerText = "Perfect Vitality."}
+			else if (constitution < 19 ){document.getElementById("ConstitutionComment").innerText = "Never wears down."}
+			else if (constitution === 20 ){document.getElementById("ConstitutionComment").innerText = "I can do this all day."}
+		};
+		function updateIntText(intelligence){				
+			document.getElementById("IntelligenceNum").innerText = intelligence
+		if (intelligence === 1) {document.getElementById("IntelligenceComment").innerText = "Animalistic."}
+			else if (intelligence < 3) {document.getElementById("IntelligenceComment").innerText = "Rather Animalistic."}
+			else if (intelligence < 5) {document.getElementById("IntelligenceComment").innerText = "Limited Knowledge."}
+			else if (intelligence < 7 ){document.getElementById("IntelligenceComment").innerText = "Complete Ditz."}
+			else if (intelligence < 9 ){document.getElementById("IntelligenceComment").innerText = "Forgetful"}
+			else if (intelligence < 11 ){document.getElementById("IntelligenceComment").innerText = "Average."}
+			else if (intelligence < 13 ){document.getElementById("IntelligenceComment").innerText= "Logical"}
+			else if (intelligence < 15 ){document.getElementById("IntelligenceComment").innerText = "Fairly Intelligent"}
+			else if (intelligence < 17 ){document.getElementById("IntelligenceComment").innerText = "Very Intelligent."}
+			else if (intelligence < 19 ){document.getElementById("IntelligenceComment").innerText = "Smartest in the Room"}		
+			else if (intelligence === 20 ){document.getElementById("IntelligenceComment").innerText = "Famous Genius"}
+		};
+		function updateWisText(wisdom){				
+			document.getElementById("WisdomNum").innerText = wisdom
+		if (wisdom === 1) {document.getElementById("WisdomComment").innerText = "Barely Aware."}
+			else if (wisdom < 3) {document.getElementById("WisdomComment").innerText = "Oblivious"}
+			else if (wisdom < 5) {document.getElementById("WisdomComment").innerText = "No Forethought"}
+			else if (wisdom < 7 ){document.getElementById("WisdomComment").innerText = "No Common Sense"}
+			else if (wisdom < 9 ){document.getElementById("WisdomComment").innerText = "Unaware"}
+			else if (wisdom < 11 ){document.getElementById("WisdomComment").innerText = "Average."}
+			else if (wisdom < 13 ){document.getElementById("WisdomComment").innerText= "Insightful."}
+			else if (wisdom < 15 ){document.getElementById("WisdomComment").innerText = "Intuitive."}
+			else if (wisdom < 17 ){document.getElementById("WisdomComment").innerText = "Amazingly Perceptive."}
+			else if (wisdom < 19 ){document.getElementById("WisdomComment").innerText = "Source of Wisdom"}
+			else if (wisdom === 20 ){document.getElementById("WisdomComment").innerText = "Nearly Prescient"}		
+		};
+		
+		function updateChaText(charisma){
+			document.getElementById("CharismaNum").innerText = charisma
+		if (charisma === 1) {document.getElementById("CharismaComment").innerText = "Repelling Presence."}
+			else if (charisma < 3) {document.getElementById("CharismaComment").innerText = "Minimal Thought"}
+			else if (charisma < 5) {document.getElementById("CharismaComment").innerText = "Unsociable"}
+			else if (charisma < 7 ){document.getElementById("CharismaComment").innerText = "Uninteresting"}
+			else if (charisma < 9 ){document.getElementById("CharismaComment").innerText = "Kinda a Bore"}
+			else if (charisma < 11 ){document.getElementById("CharismaComment").innerText = "Average."}
+			else if (charisma < 13 ){document.getElementById("CharismaComment").innerText= "Mildy Interesting."}
+			else if (charisma < 15 ){document.getElementById("CharismaComment").innerText = "Popular."}
+			else if (charisma < 17 ){document.getElementById("CharismaComment").innerText = "Quite Eloquent."}
+			else if (charisma < 19 ){document.getElementById("CharismaComment").innerText = "Everyone's Friend"}
+			else if (charisma === 20 ){document.getElementById("CharismaComment").innerText = "Renowned"}
+		};
+			
+			
+		
+	document.getElementById('volumeButton').addEventListener('click', function() {
+    var slider = document.getElementById('volumeSlider');
+    slider.style.display = slider.style.display === 'none' ? 'block' : 'none';
+});
+			
+			
 			
 	document.getElementById('volumeButton').addEventListener('click', function() {
     var slider = document.getElementById('volumeSlider');
@@ -1617,15 +1845,20 @@ story.ObserveVariable("unicorn", function(variableName, newValue) {
   
 
 story.BindExternalFunction("enemyHarm", (x) => {
-	const damageAmount = calculateDamage(currentItem.damage);
+  let damageAmount;
+
   if (x < 0) {
-    // Calculate damage based on currentItem.damage
-    const damageAmount = calculateDamage('+1');
-    enemyCurrentHP = enemyCurrentHP - damageAmount + Attack_Mod;
+    // Calculate damage with +1 modifier
+    damageAmount = calculateDamage('+1');
   } else {
-    enemyCurrentHP = enemyCurrentHP - calculateDamage(currentItem.damage) + Attack_Mod;
+    damageAmount = calculateDamage(currentItem.damage);
   }
-console.log(`You delt ${damageAmount+Attack_Mod} damage.`);
+
+  const totalDamage = damageAmount + Attack_Mod;
+  enemyCurrentHP -= totalDamage; // Subtract damage from enemyCurrentHP
+
+  console.log(`You dealt ${totalDamage} damage.`);
+
   if (enemyCurrentHP < 0) {
     enemyCurrentHP = 0;
   }

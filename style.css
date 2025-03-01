@@ -86,6 +86,7 @@ body{
         overflow: hidden;
     }
 }
+
 .shop-header {
     font-family: Sedgwick Ave Display;
     color: white;
@@ -94,9 +95,9 @@ body{
 	margin: 0 auto; /* Center the container horizontally within its parent */
     display: flex;
     align-items: center;
-    padding: 10px;
-	width: 75%px;
-	grid-column: 2 / span 4;
+	width: 112%;
+	padding-left: 30px;
+	border-bottom: 1px solid #ccc; /* Optional: add a border between items */
 }
 
 .shop-title{
@@ -104,9 +105,11 @@ body{
     font-size: 14pt;
     font-family: sans-serif;
     font-weight: lighter;
-	 color: white;
-     background-color: #557D8B;
-	 width: 710px;
+	 color: #191919;
+     background-color: #E1E8EB;
+	 width: 100%;
+	 align-items: center;
+	 border-bottom: 5px solid #bbb; /* Optional: add a border between items */
 }
 
 
@@ -115,6 +118,8 @@ body{
     padding: 10px; /* Add padding for spacing */
 	width: 260px;
 }
+
+
 /* Container for each shop item */
 .shop-item {
 	text-align: center; /* Center the content horizontally */
@@ -132,12 +137,26 @@ body{
 
 .shop-item Button {
    width: 90px;
+    background-color: #E1E8EB;
+    color: #191919;
+    border: 2px solid #557D8B;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+.shop-item Button:hover{
+	background-color: #D0D8DC;
+    color: #191919;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 
 .shop-item img {
    width: 32px;
 }
+
+
 
 /* Main subtitles. */
 .subtitle{
@@ -510,7 +529,7 @@ text-shadow: 1px 1px 2px black;}
   Enables <iframe> support work on itch.io when using mobile iOS
 */
 .outerContainer {
-    position: fixed;
+    position: Absolute;
     display: block;
     margin: 0;
     padding: 0;
@@ -582,7 +601,6 @@ a {
     font-family: sans-serif;
     transition: color 0.6s;
     text-decoration: none;
-	display: block;
 }
 
 .uibutton:hover{
@@ -632,19 +650,19 @@ a {
 
 /* Panel containing tab buttons. */
 .tabpanel{
-    width: 300px;
-    height: 532px;
+    width: 360px;
+    height: 500px;
 	top: 236px;
     margin-top: 5px;
     text-align: center;
 	position: fixed;
 	bottom: 150px;
-	left:308px;
+	left:276px;
 }	
 
 /* Tab button. */
 .tab{
-    width: 300px;
+    width: 160px;
     height: 64px;
     margin-bottom: 15px;
     border: 0px;
@@ -656,6 +674,7 @@ a {
     position: relative; /* Enables blinking */
 	bottom:0px;
     overflow: hidden;
+	font-family: Sedgwick Ave Display;
 }
 
 /* Tab button onhover. */
@@ -706,7 +725,7 @@ img {
 */
 .choice {
     position: relative;
-	width: 400px;
+	width: 175px;
 	text-align: center;
     line-height: 1.7em;
 	margin: 12px 15px;
@@ -714,9 +733,7 @@ img {
 	font-size: 1rem;
 	background: #557D8B;
 	color: white;
-	padding: 15px;
-	left:30px;
-	
+	left:45px;
 }
 
 /* 
@@ -729,7 +746,6 @@ img {
 	border-style: solid;
 	border-width: 3px;
 	border-color: #218374;
-
 	background:#749BAA;
 	
 }
@@ -739,6 +755,11 @@ img {
   Class applied to choice links
 */
 .choice a {
+    display: block; /* Makes the anchor tag cover the full area of .choice */
+    width: 100%; /* Ensures it covers the full width of the parent */
+    height: 100%; /* Ensures it covers the full height of the parent */
+    text-decoration: none; /* Removes any underlines */
+    color: white; /* Ensure text color is inherited correctly */
     font-size: 15pt;
 }
 
@@ -758,7 +779,7 @@ img {
     margin-top: 15px;
     text-align: center;
     left: 321px;
-    top: 775px;
+    top: 825px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1px;
@@ -767,6 +788,7 @@ img {
 }
 /* One of the four buttons at the bottom left. */
 .uibutton{
+	font-family: Sedgwick Ave Display;
     width: 135px;
     height: 35px;
     margin-bottom: 5px;
@@ -774,7 +796,6 @@ img {
     background-color: #2F444C;  /* Main */
     color: white;               /* Text */
     border: 0px;
-    font-family: 'Interface';
     font-size: 16px;
     cursor: pointer;
 	bottom:0px;
@@ -820,7 +841,7 @@ img {
 }
 .volume-control {
     margin: 20px;
-	bottom:45px;
+	bottom:65px;
 	position: fixed;
 }
 
@@ -841,7 +862,7 @@ img {
 
 .playbutton{
     margin: 20px;
-	bottom:5px;
+	bottom:25px;
 	position: fixed;
 }
 #playButton {
@@ -1371,11 +1392,28 @@ button img {
     margin: 5px 0; /* Add some margin between paragraphs */
 }
 
+
+
 .save-info p.level {
     /* Style the Level <p> element */
     position: absolute;
-	bottom: 0; /* Position at the bottom */
-    right: 0; /* Position at the right */
+	bottom: -30px; /* Position at the bottom */
+    right: 0px; /* Position at the right */
+
+}
+
+.save-info p.saveName {
+    /* Style the saveName <p> element */
+    position: absolute;
+	top: 15px; /* Position at the bottom */
+    left: 0px; /* Position at the right */
+
+}
+.save-info p.slot {
+    /* Style the saveName <p> element */
+    position: absolute;
+	top: -10px; /* Position at the bottom */
+    left: 0px; /* Position at the right */
 
 }
 
@@ -1556,6 +1594,7 @@ button {
 
 /* Tab button. */
 .tab{
+	
     width: 75%;
     height: 50%;
     margin-bottom: 5px;
@@ -1568,6 +1607,7 @@ button {
     position: relative; /* Enables blinking */
 	bottom:0px;
     overflow: hidden;
+	font-family: Sedgwick Ave Display;
 }
 
 /* Tab button onhover. */
@@ -1600,6 +1640,7 @@ text-shadow: 1px 1px 2px black;}
 }
 
 .uibutton{
+	font-family: Sedgwick Ave Display;
     width: 110px;
     height: 25px;
     margin-bottom: 3px;
@@ -1616,7 +1657,7 @@ text-shadow: 1px 1px 2px black;}
 .buttonpanel{
     margin-top: 15px;
     text-align: center;
-	top: 200px;
+	top: 209px;
     left: 75px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1743,6 +1784,7 @@ text-shadow: 1px 1px 2px black;}
 }
 
 .choice {
+	display: inline-block;
     position: relative;
 	width: 150px;
 	text-align: center;
@@ -1782,6 +1824,328 @@ text-shadow: 1px 1px 2px black;}
 ::-webkit-scrollbar-thumb:hover {
   background: #557D8B;
 }  
+}
+
+@media screen and (max-width: 435px) {
+	
+	
+.outerContainer {
+    position: fixed;
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: 75%;
+    width: 100%;
+	overflow-y: auto;
+    top: 0px;
+    background:#557D8B;
+    background-size: cover;
+    background-repeat: no-repeat;
+	left: 0px;
+}
+
+.container {
+    position: relative; /* Position relative to .outerContainer */
+    display: block;
+    height: 100%;
+    width: 100%;
+	padding: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+    padding-top: 0em;
+    padding-bottom: 0em;
+    background: #2F444C;
+    top: 0; /* Adjust top value as needed */
+	margin-left: 8px;
+}
+
+
+
+.fade-in-out {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: -25px;
+  overflow-y: auto;
+  width: 98%; /* Set a fixed width */
+  height: 100%; /* Set a fixed height */
+  transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+}
+
+.fade-in-out.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.leftbar {
+    width: 100%;
+    height: 26%;
+    position: fixed;
+    left: 0px; /* Adjusted left */
+    top: 587px;
+    user-select: none;
+	    background:#557D8B;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.tabpanel {
+    width: 87%;
+    height: 18%;
+    top: 594px;
+    margin: 0px;
+    text-align: center;
+    position: fixed;
+    bottom: 150px;
+    left: 55px; /* Adjusted left */
+	display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+/* Tab button. */
+.tab{
+	
+    width: 27%;
+    height: 31%;
+    margin: 3px;
+    border: 0px;
+    font-size: 18px;
+    color: white;               /* Text */
+    border-radius: 30px 30px 30px 30px;
+    background-color: #2F444C;  /* Main */
+    transition: background-color 0.6s ease;
+    position: relative; /* Enables blinking */
+	bottom:0px;
+    overflow: hidden;
+	font-family: Sedgwick Ave Display;
+}
+
+/* Tab button onhover. */
+.tab:hover{
+    border-width: 4px 0px 3px 0px;
+    border-color: #218374;        /* Text */
+    border-style: solid;
+	/* The scrollbar of the main container. */
+}
+
+.title{
+	z-index:1;
+    display:none;
+	position: fixed;
+	font-family: Sedgwick Ave Display;
+    font-size: 20px;
+    margin-bottom: 25px;
+	color:white;
+	left: 125px;
+	top: 10px;
+text-shadow: 1px 1px 2px black;}
+
+.logo{
+    z-index: 2;
+    width: 0px;
+    height: 0px;
+    position: fixed;
+    top: 0px;
+    left: 145px;
+}
+
+.uibutton{
+	font-family: Sedgwick Ave Display;
+    width: 69px;
+    height: 25px;
+    margin-bottom: 3px;
+    border-radius: 30px;
+    background-color: #2F444C;  /* Main */
+    color: white;               /* Text */
+    border: 0px;
+    font-family: 'Interface';
+    font-size: 16px;
+    cursor: pointer;
+	bottom:0px;
+	left:145px;
+}
+.buttonpanel{
+    margin-top: 15px;
+    text-align: center;
+	top: 740px;
+    left: 57px;
+    display: flex;
+    bottom: 120px;
+    position: fixed;
+	height: 26px;
+	width: 445px;
+}
+
+/* Half of the main window. */
+.half{
+	margin-left: 0px;
+    width: 255px;
+    float: left;
+	
+}
+
+/* Left half of the main window, with right-padding. */
+.lefthalf{
+    width: 396px;
+    float: left;
+    padding-right: 4px;
+}
+
+/* Right half of the main window, with left-padding.*/
+.righthalf{
+    width: 396px;
+    float: right;
+    padding-left: 4px;
+}
+/* Stat name of the attributes on the stats tab. */
+.statname {
+    width: 80px;
+    float: left;
+	color:white;
+}
+
+/* Stat number of the attributes on the stats tab. */
+.statnumber {
+    width: 60px;
+    text-align: center;
+    float: left;
+	color:white;
+}
+
+/* Stat comment of the attributes on the stats tab. */
+.statcomment {
+    width: 105px;
+    float: left;
+}
+
+.statsTitle{
+	font-family: "Sedgwick Ave Display";
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 0px;
+	height:50px;
+    text-shadow: 1px 1px 2px black;
+	color:white;
+}
+
+
+.EquipmentName{
+	font-family: "Sedgwick Ave Display";
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 0px;
+	height:50px;
+    text-shadow: 1px 1px 2px black;
+	color:white;
+}
+
+.InventoryName{
+	font-family: "Sedgwick Ave Display";
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 0px;
+	height:50px;
+    text-shadow: 1px 1px 2px black;
+	color:white;
+}
+
+
+.subtitle{
+    font-size: 28px;
+	text-align:left;
+    margin-top: 4px;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 2px black; /* Text-shadow */
+	margin-left: 20px;
+}
+
+.healthbar {
+    margin-left: 0px;
+    width: 480px;
+    height: 18px;
+    border-color: #191919;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 43px 0px 20px 0px;
+    overflow: hidden;
+
+}
+.healthbarnumber {
+	color:white;
+}
+/* Inner status tab healthbar. */
+.healthbarinner {
+    height: 100%;
+}
+.healhbarcomment {
+    width: 205px;
+    float: left;
+    text-align: left;
+    margin-left: 0px;
+}
+
+
+.choice:hover{
+	border-style: solid;
+	border-width: 3px;
+	border-color: #218374;
+
+	background:#749BAA;
+	
+}
+
+.choice {
+    position: relative;
+	width: 100px;
+	text-align: center;
+    line-height: 1.7em;
+	margin: 12px 15px;
+	font-weight: normal;
+	font-size: 1rem;
+	background: #557D8B;
+	color: white;
+	padding: 15px;
+	left:30px;
+	
+}
+
+/*
+  Class applied to choice links
+*/
+.choice a {
+	
+    font-size: 12pt;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #2F444C; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #557D8B; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #557D8B;
+}  
+p {
+    font-size: 16pt;
+    color: white;
+    line-height: 1.7em;
+    font-weight: lighter;
+	padding-left:64px;
+	padding-right:64px;
+}
+
 }
 
 

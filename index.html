@@ -13,6 +13,47 @@
 
     <link rel="stylesheet" href="style.css">
 
+
+
+<script>
+ const currentPassword = "Fluttershy"; // The current password
+
+    function checkPassword() {
+        const storedPassword = localStorage.getItem("storedPassword");
+
+        // Check if the stored password matches the current password
+        if (storedPassword === currentPassword) {
+            return; // If the passwords match, exit the function
+        }
+
+        var password = prompt("Please enter the password:");
+        if (password === currentPassword) {
+            // Save the current password in localStorage
+            localStorage.setItem("storedPassword", currentPassword);
+        } else {
+            alert("Incorrect password! To play the Early Access make sure you sign up to Pony Adventure's Patreon");
+            window.location = "https://www.patreon.com/user?u=65513562"; // Redirect to a different page
+        }
+    }
+
+function openImagePopup(imageFileName) {
+    const imageUrl = imageFileName; // Use the provided file path as the URL
+    const popupWindow = window.open(
+        "",
+        "Image Popup",
+        "width=800,height=600,resizable=yes,scrollbars=no,status=no"
+    );
+    
+    popupWindow.document.write(`
+        <html><head><title>Image Popup</title></head>
+        <body style="margin:0;">
+            <img src="${imageUrl}" style="width:100%; height:100%; object-fit:contain;">
+        </body></html>
+    `);
+    popupWindow.document.close();
+}
+</script>
+
 </head>
 	
 <body>
@@ -139,7 +180,6 @@
 		</div>
 		<div class="savecontrolbar">
                     <button class="button saveleftbutton warning" id="deletebutton" >Delete</button>
-                    <textarea rows="2" cols="55" maxlength="114" class="savecomment savenewcommentfield" placeholder="Comment. Old comment if left blank." id="newcomment"></textarea>
                     <button class="button saverightbutton" id="saveButton" >Save</button style>
 					<button class="button loadrightbutton" id="loadButton" >Load</button>
                             </div>
@@ -201,9 +241,9 @@
 					</a>
 					</div>
                 <div class="tabpanel">
-                    <button class="tab tabactive" id="scenetab">Scene</button>
-                    <button class="tab" id="statstab">Stats</button>
-                    <button class="tab" id="statustab">Status</button>
+                    <button class="tab tabactive" id="scenetab">Story</button>
+                    <button class="tab" id="statstab">Traits</button>
+                    <button class="tab" id="statustab">Vitals</button>
                     <button class="tab" id="inventorytab">Inventory</button>
 					<button class="tab" id="spellstab" style="display: none">Spells</button>
                     <button class="tab" id="savetab">Save</button>           
