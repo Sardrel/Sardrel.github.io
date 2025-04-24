@@ -2,7 +2,7 @@
 
     // Create ink story from the content using inkjs
     var story = new inkjs.Story(storyContent);
-const currentVersion = 'v6';  // Change this version number when you update your code
+const currentVersion = 'v4';  // Change this version number when you update your code
 const storedVersion = localStorage.getItem('appVersion');
 story.BindExternalFunction("get_name", () => {
     // 'prompt' is a built-in Javascript method
@@ -380,6 +380,10 @@ function modifyInkBits(amount) {
 function createItem(name, description, quantity, imageSrc, canEquip = false, hasAction = false, isDroppable = true, damage = null, price) {
   return { name, description, quantity, imageSrc, canEquip, hasAction, isDroppable, damage, price };
 }
+
+story.BindExternalFunction("createItem", (name, description, quantity, imageSrc, canEquip, hasAction, isDroppable, damage, price) => {
+    return createItem(name, description, quantity, imageSrc, canEquip, hasAction, isDroppable, damage, price);
+});
 const npcSellers = {
     'Citrus': { 
 	shopTitle: 'CITRUS\'\S ORANGES',
@@ -963,9 +967,7 @@ if (storedVersion !== currentVersion) {
     saveGameSlot(selectedSaveIndex);
     if (savingToNewSlot) {
 		removeNullFromArray(savedSlots);
-        dummySlotClicked = false;
         localStorage.setItem('currentSlotIndex', currentSlotIndex);
-        localStorage.setItem('dummySlotClicked', dummySlotClicked);
     }
 
     renderSaveSlots();
@@ -1030,21 +1032,20 @@ function renderSaveSlots() {
     dummyParagraph.textContent = "NEW SAVE";
     dummySaveInfo.appendChild(dummyParagraph);
     dummySaveSlot.appendChild(dummySaveInfo);
-let dummySlotClicked = false;
+    let dummySlotClicked = localStorage.getItem('dummySlotClicked') === 'true' || false;
 
 dummySaveSlot.addEventListener("click", () => {
     // Handle the click event for the dummy slot only if it hasn't been clicked before
 	
     if (!dummySlotClicked) {
+		console.log(`Clicked DummySlot and Increased Slot Index`);
 		selectedSaveIndex = currentSlotIndex;
         dummySlotClicked = true;	
         // Increment currentSlotIndex so that the next save will be in a new slot
 		currentSlotIndex++;
 		// Store values in localStorage
-        localStorage.setItem('currentSlotIndex', currentSlotIndex);
         localStorage.setItem('dummySlotClicked', dummySlotClicked);
-		
-		
+			
     }
     });
     saveSlotsContainer.appendChild(dummySaveSlot);
@@ -1094,6 +1095,7 @@ function clearSelectedSlots() {
              selectedSaveIndex = index;
 			 saveSlot.classList.add('selectedSlot');
 			 if(dummySlotClicked){
+			 currentSlotIndex--;
 			 dummySlotClicked = false;
 			 }
         });
@@ -1114,6 +1116,7 @@ function saveGameSlot(currentSlotIndex) {
         console.log("Selected paragraphs and images:", document.querySelectorAll('#story p, #story img'));
         let elementsData = [];
 		let inventoryData =JSON.stringify(inventory)
+		
 
         document.querySelectorAll('#story p, #story img').forEach((element, index) => {
             if (element.tagName === 'P') {
@@ -1132,8 +1135,11 @@ function saveGameSlot(currentSlotIndex) {
         
         // If no name is entered, stop and return, preventing the currentSlotIndex from being modified
         if (!saveName) {
+			let dummySlotClicked = true;
+			localStorage.setItem('dummySlotClicked', dummySlotClicked);
+			console.log(`${dummySlotClicked}`);
             console.log("Save cancelled. No save name entered.");
-			
+			console.log(`Game attempted to save to Slot ${currentSlotIndex + 1}`);
             return; // Prevents saving and incrementing currentSlotIndex
         }
 		
@@ -1159,7 +1165,10 @@ function saveGameSlot(currentSlotIndex) {
 			charisma: charisma,
 			saveName: saveName,
         };
-
+		
+		let dummySlotClicked = false;
+		localStorage.setItem('dummySlotClicked', dummySlotClicked);
+		localStorage.setItem('currentSlotIndex', currentSlotIndex);
         window.localStorage.setItem('save-slots', JSON.stringify(savedSlots));
         console.log(`Game saved to Slot ${currentSlotIndex + 1}`);
 

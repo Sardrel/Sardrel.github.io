@@ -18,7 +18,14 @@
 @font-face {
     font-family: 'Body';
     font-style: normal;
-    font-weight: normal;
+    font-weight: 400;
+    src: url('../fonts/selawkl.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Body';
+    font-style: normal;
+    font-weight: 700;
     src: url('../fonts/selawkl.ttf') format('truetype');
 }
 
@@ -71,14 +78,6 @@
 
 html{
     height: 100%;
-}
-
-body{
-    font-family: "Body";
-    margin: 0;
-    min-height: 80%;
-    min-width: 100%;
-    background-color: #191919;             /* Background */
 }
 
 @media (min-width: 1210px) and (min-height: 810px) {
@@ -172,6 +171,7 @@ a{
     text-decoration: none;
     font-weight: bold;
 }
+
 
 a:link, a:visited{
     color: white;               /* Text */
@@ -590,7 +590,7 @@ p {
     font-size: 14pt;
     color: white;
     line-height: 1.7em;
-    font-weight: lighter;
+    font-weight: bolder;
 	padding-left:64px;
 	padding-right:64px;
 }
@@ -2141,7 +2141,7 @@ p {
     font-size: 16pt;
     color: white;
     line-height: 1.7em;
-    font-weight: lighter;
+    font-weight: bolder;
 	padding-left:64px;
 	padding-right:64px;
 }

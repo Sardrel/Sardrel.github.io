@@ -425,11 +425,11 @@ code{
     border-color: #E6192A;
 }
 
-.noble:hover{
+.citizen:hover{
     border-color: #C10DFF;
 }
 
-.baron:hover{
+.free:hover{
     border-color: #8F3413;
 }
 
