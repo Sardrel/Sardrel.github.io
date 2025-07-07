@@ -48,7 +48,6 @@ function checkPassword() {
 
     if (password && password.trim() === currentPassword) {
         localStorage.setItem("storedPassword", currentPassword);
-        alert("Access granted. Welcome to Pony Adventure Early Access!");
     } else {
         alert("Incorrect password! To play the Early Access, make sure you sign up to Pony Adventure's Patreon.");
         window.location = "https://www.patreon.com/user?u=65513562";
