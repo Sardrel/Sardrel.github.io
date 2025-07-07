@@ -31,26 +31,31 @@ function openImagePopup(imageFileName) {
     popupWindow.document.close();
 }
 
-const currentPassword = "Spike"; // The current password
+const currentPassword = "Spike"; // Update this when the password changes
 
-    function checkPassword() {
-        const storedPassword = localStorage.getItem("storedPassword");
+function checkPassword() {
+    const storedPassword = localStorage.getItem("storedPassword");
 
-        // Check if the stored password matches the current password
-        if (storedPassword === currentPassword) {
-            return; // If the passwords match, exit the function
-        }
+    // If the stored password is different from the current one, clear it
+    if (storedPassword && storedPassword !== currentPassword) {
+        localStorage.removeItem("storedPassword");
+    }
 
-        var password = prompt("Please enter the password:");
-        if (password === currentPassword) {
-            // Save the current password in localStorage
-            localStorage.setItem("storedPassword", currentPassword);
-        } else {
-            alert("Incorrect password! To play the Early Access make sure you sign up to Pony Adventure's Patreon");
-            window.location = "https://www.patreon.com/user?u=65513562"; // Redirect to a different page
-        }
-    };
-	checkPassword(); // Call the function when the page loads
+    // Re-check in case it was just cleared
+    if (localStorage.getItem("storedPassword") === currentPassword) return;
+
+    const password = prompt("Please enter the password to access Early Access:");
+
+    if (password && password.trim() === currentPassword) {
+        localStorage.setItem("storedPassword", currentPassword);
+        alert("Access granted. Welcome to Pony Adventure Early Access!");
+    } else {
+        alert("Incorrect password! To play the Early Access, make sure you sign up to Pony Adventure's Patreon.");
+        window.location = "https://www.patreon.com/user?u=65513562";
+    }
+}
+
+checkPassword();
 </script>
 </head>
 	
