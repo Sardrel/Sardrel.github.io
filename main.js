@@ -21,22 +21,7 @@ story.BindExternalFunction("get_name", () => {
     return playerName;
 });
 
-story.BindExternalFunction("get_furColor", () => {
-    // 'prompt' is a built-in Javascript method
-    let furColor = prompt("Choose your fur color", "brown");
 
-    // Check if playerName is null or empty
-    if (furColor === null || furColor === "") {
-        // Set a default name if the player doesn't enter anything
-        furColor = "brown";
-    }
-
-    // Set the playerName in story.variablesState
-    story.variablesState["furColor"] = furColor;
-
-    // Return the playerName
-    return furColor;
-});
 	
 		let playerName = 'Anon';
 		let furColor = 'brown';
@@ -381,9 +366,21 @@ function createItem(name, description, quantity, imageSrc, canEquip = false, has
   return { name, description, quantity, imageSrc, canEquip, hasAction, isDroppable, damage, price };
 }
 
-story.BindExternalFunction("createItem", (name, description, quantity, imageSrc, canEquip, hasAction, isDroppable, damage, price) => {
-    return createItem(name, description, quantity, imageSrc, canEquip, hasAction, isDroppable, damage, price);
+story.BindExternalFunction("CREATE_ITEM", function(name, description, quantity, imageSrc, canEquip, hasAction, isDroppable, damage, price) {
+  const newItem = createItem(name, description, quantity, imageSrc, canEquip, hasAction, isDroppable, damage, price);
+	addItemToInventory(newItem);
+  console.log("Item created:", newItem); // Debug info
 });
+
+story.BindExternalFunction("DROP_ITEM_BY_NAME", function(itemName) {
+  const item = inventory.find(i => i.name === itemName);
+  if (item) {
+    dropItem(item);
+  } else {
+    console.warn("Attempted to drop item not found:", itemName);
+  }
+});
+
 const npcSellers = {
     'Citrus': { 
 	shopTitle: 'CITRUS\'\S ORANGES',
@@ -1344,6 +1341,8 @@ function removeAll(selector) {
 	btnShowPage6.addEventListener("click", function() {
 	hideAllPages();
 	renderSaveSlots();
+	
+	
 	document.querySelector('.outerContainer').scrollTop = 0;
 	page6.classList.add("show");
 
@@ -1814,10 +1813,9 @@ story.BindExternalFunction("enemywillHarm", (x) => {
 const sword = createItem('Sword', 'Deals slashing damage', 1, 'sword.png', true, false, false,  '1d6');
 const shield = createItem('Shield', 'Provides additional defense', 1, 'IMAGE/Items/Shield/tile091.png', true);
 const minorhealthPotion = createItem('Minor Health Potion', 'Restores a little bit of health', 1, 'IMAGE/Items/Potions/tile016.png', false, true);
-const javelin = createItem('Javelin', 'Deals pieceing damage', 1, 'sword.png', true, '1d6');
-const hooves = createItem('Hooves', 'Your goddess given right', 1, 'IMAGE/Items/Weapons/tile131.png', true, false, false, '1d4');
-const wings = createItem('Wings', 'You use these to fly', 1, 'IMAGE/Items/Weapons/wing.png', true, false, false, '1d4');
-const magic = createItem('Magic', 'Power from the Unknown', 1, 'IMAGE/Items/Weapons/562.png', true, false, false, '1d4');
+const hooves = createItem('Hooves', 'Your goddess given right', 1, 'IMAGE/Items/Weapons/tile131.png', true, false, false, '1');
+const wings = createItem('Wings', 'You use these to fly', 1, 'IMAGE/Items/Weapons/wing.png', true, false, false, '1');
+const magic = createItem('Magic', 'Power from the Unknown', 1, 'IMAGE/Items/Weapons/562.png', true, false, false, '1');
 const bits = createItem('Bits', 'The main form of currency', 1, 'IMAGE/Items/Treasure/8.png', false);
 
 addItemToInventory(hooves);
@@ -1852,15 +1850,45 @@ story.ObserveVariable("unicorn", function(variableName, newValue) {
 			equipItem(magic);
 		});	 
   
+  
+function rollDiceExpression(expression) {
+    // Remove whitespace
+    expression = expression.replace(/\s+/g, '');
+
+    // Match all terms: e.g., "2d6", "+3", "-1d4", etc.
+    const terms = expression.match(/[+-]?\d*d?\d+/g);
+
+    let total = 0;
+
+    for (const term of terms) {
+        if (term.includes('d')) {
+            const match = term.match(/([+-]?)(\d*)d(\d+)/);
+            if (!match) continue;
+
+            const sign = match[1] === '-' ? -1 : 1;
+            const numDice = parseInt(match[2]) || 1;
+            const sides = parseInt(match[3]);
+
+            for (let i = 0; i < numDice; i++) {
+                total += sign * (Math.floor(Math.random() * sides) + 1);
+            }
+        } else {
+            // Flat modifier like +3 or -2
+            total += parseInt(term);
+        }
+    }
+
+    return total;
+}  
 
 story.BindExternalFunction("enemyHarm", (x) => {
   let damageAmount;
 
   if (x < 0) {
     // Calculate damage with +1 modifier
-    damageAmount = calculateDamage('+1');
+    damageAmount = rollDiceExpression('1');
   } else {
-    damageAmount = calculateDamage(currentItem.damage);
+    damageAmount = rollDiceExpression(currentItem.damage);
   }
 
   const totalDamage = damageAmount + Attack_Mod;
@@ -1883,12 +1911,14 @@ const npcSellers = {
 	createItem('Orange', 'Restores a little bit of health', 5, 'IMAGE/Items/Food/tile103.png', false, false, false, '0', 5),
 	createItem('Orange Juice', 'Restores  bit of health', 5, 'IMAGE/Items/Food/tile212.png', false, false, false, '0', 20)
 	] 
-	}, // Add blacksmith's inventory
-    'Thyme': {
-		inventory: [
-		
+	},
+    'Scorching Heat': {
+	inventory: [
+	createItem('Copper Dagger', 'Deals slashing damage', 15, 'IMAGE/Items/Food/tile103.png', false, false, false, '0', '1d4'),
+	createItem('Sword', 'Deals slashing damage', 5, 'IMAGE/Items/Food/tile212.png', false, false, false, '0', 20),
+	createItem('Javelin', 'Deals pierceing damage', 1, 'sword.png', true, '1d6'),
 		] 
-		}, // Add alchemist's inventory
+		}, 
     // Add more sellers as needed
 };
 
@@ -1897,26 +1927,32 @@ const npcSellers = {
 
 
 story.ObserveVariable("bits", function(variableName, newValue) {
-  const bitsItem = inventory.find(item => item.name === 'Bits');
-  const quantityChange = newValue - (bitsItem?.quantity || 0); // Handles initial case where bitsItem is null
+  let bitsItem = inventory.find(item => item.name === 'Bits');
+  const quantityChange = newValue - (bitsItem?.quantity || 0);
 
   if (quantityChange > 0) {
-    // Bits increased, update quantity
-    bitsItem.quantity = newValue;
-  } else if (quantityChange < 0) {
-    // Bits decreased, remove some from inventory
+    // Bits increased
+    if (bitsItem) {
+      bitsItem.quantity = newValue;
+    } else {
+      // Create a new Bits item with the updated quantity
+      const newBits = createItem('Bits', 'The main form of currency', newValue, 'IMAGE/Items/Treasure/8.png', false);
+      inventory.push(newBits);
+    }
+  } else if (quantityChange < 0 && bitsItem) {
+    // Bits decreased
     const amountToRemove = Math.abs(quantityChange);
-   if (bitsItem) {
-  bitsItem.quantity = Math.max(bitsItem.quantity - amountToRemove, 0);
-  //  Ensure quantity doesn't go below 0
-  if (bitsItem.quantity === 0) {
-    const indexToRemove = inventory.indexOf(bitsItem);
-    inventory.splice(indexToRemove, 1);
+    bitsItem.quantity = Math.max(bitsItem.quantity - amountToRemove, 0);
+
+    if (bitsItem.quantity === 0) {
+      const indexToRemove = inventory.indexOf(bitsItem);
+      inventory.splice(indexToRemove, 1);
+    }
   }
-}
-  }
+
   updateInventoryUI();
 });
+
 
  const ponyContainer = document.getElementById('ponyContainer');
  const zebraContainer = document.getElementById('zebraContainer');
