@@ -1814,6 +1814,7 @@ const sword = createItem('Sword', 'Deals slashing damage', 1, 'sword.png', true,
 const shield = createItem('Shield', 'Provides additional defense', 1, 'IMAGE/Items/Shield/tile091.png', true);
 const minorhealthPotion = createItem('Minor Health Potion', 'Restores a little bit of health', 1, 'IMAGE/Items/Potions/tile016.png', false, true);
 const hooves = createItem('Hooves', 'Your goddess given right', 1, 'IMAGE/Items/Weapons/tile131.png', true, false, false, '1');
+const claws = createItem('Claws', 'Your emperor given right', 1, 'IMAGE/Items/Weapons/claw.png', true, false, false, '1');
 const wings = createItem('Wings', 'You use these to fly', 1, 'IMAGE/Items/Weapons/wing.png', true, false, false, '1');
 const magic = createItem('Magic', 'Power from the Unknown', 1, 'IMAGE/Items/Weapons/562.png', true, false, false, '1');
 const bits = createItem('Bits', 'The main form of currency', 1, 'IMAGE/Items/Treasure/8.png', false);
@@ -1848,6 +1849,13 @@ story.ObserveVariable("unicorn", function(variableName, newValue) {
 			addItemToInventory(magic);
 			unequipItem(hooves)
 			equipItem(magic);
+		});	 
+		
+		story.ObserveVariable("gryphon", function(variableName, newValue) {
+			gryphon = newValue;
+			addItemToInventory(claws);
+			dropItem(hooves)
+			equipItem(claws);
 		});	 
   
   
