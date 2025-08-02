@@ -20,9 +20,6 @@ story.BindExternalFunction("get_name", () => {
     // Return the playerName
     return playerName;
 });
-
-
-	
 		let playerName = 'Anon';
 		let furColor = 'brown';
 		let currentLocation = "Nowhere";
@@ -1794,16 +1791,14 @@ story.ObserveVariable("Attack_Mod", function(variableName, newValue) {
 			Attack_Mod = newValue;	
 		});	    
 		
+story.ObserveVariable("Seduce_Mod", function(variableName, newValue) {
+			Attack_Mod = newValue;	
+		});	    
+		
+		
  
 		
-story.BindExternalFunction("enemywillHarm", (x) => {
-       enemyCurrentWill -= Math.round(x * ((enemyCurrentLust / 100) + 1));
-   if (enemyCurrentWill < 0) {
-        enemyCurrentWill = 0; 
-    }
-	story.variablesState["enemyCurrentWill"] = enemyCurrentWill
 
-});
 
 
 
@@ -1814,8 +1809,8 @@ const sword = createItem('Sword', 'Deals slashing damage', 1, 'sword.png', true,
 const shield = createItem('Shield', 'Provides additional defense', 1, 'IMAGE/Items/Shield/tile091.png', true);
 const minorhealthPotion = createItem('Minor Health Potion', 'Restores a little bit of health', 1, 'IMAGE/Items/Potions/tile016.png', false, true);
 const hooves = createItem('Hooves', 'Your goddess given right', 1, 'IMAGE/Items/Weapons/tile131.png', true, false, false, '1');
-const claws = createItem('Claws', 'Your emperor given right', 1, 'IMAGE/Items/Weapons/claw.png', true, false, false, '1');
 const wings = createItem('Wings', 'You use these to fly', 1, 'IMAGE/Items/Weapons/wing.png', true, false, false, '1');
+const claws = createItem('Claws', 'Your emperor given right', 1, 'IMAGE/Items/Weapons/claw.png', true, false, false, '1');
 const magic = createItem('Magic', 'Power from the Unknown', 1, 'IMAGE/Items/Weapons/562.png', true, false, false, '1');
 const bits = createItem('Bits', 'The main form of currency', 1, 'IMAGE/Items/Treasure/8.png', false);
 
@@ -1910,6 +1905,47 @@ story.BindExternalFunction("enemyHarm", (x) => {
 
   story.variablesState["enemyCurrentHP"] = enemyCurrentHP;
 });
+
+story.BindExternalFunction("enemywillHarm", (diceExpr) => {
+  // Roll the base will damage using the dice expression provided by Ink
+  const baseRoll = rollDiceExpression(diceExpr || "1d6");
+
+  // Item bonus and attack mod
+  const itemBonus = currentItem.willDamage || 0;
+  const totalBase = baseRoll + itemBonus + Seduce_Mod;
+
+  // Apply lust multiplier
+  const totalDamage = Math.round(totalBase * ((enemyCurrentLust / 100) + 1));
+
+  // Apply and clamp enemy's Will
+  enemyCurrentWill = Math.max(enemyCurrentWill - totalDamage, 0);
+  story.variablesState["enemyCurrentWill"] = enemyCurrentWill;
+  
+  // Calculate lust gain based on damage
+  const baseLustGain = Math.ceil(totalDamage * 2);
+
+  // Apply modifiers if needed
+  const playerLustMultiplier = .5 + (currentItem.lustGainBonus || 0);
+  const finalPlayerLustGain = Math.ceil(baseLustGain * playerLustMultiplier);
+  const finalEnemyLustGain = baseLustGain; // Optionally modify this differently
+
+  // Update lust values and clamp to 100
+  playerLust = Math.min(playerLust + finalPlayerLustGain, 100);
+  enemyCurrentLust = Math.min(enemyCurrentLust + finalEnemyLustGain, 100);
+
+  // Sync with Ink
+  story.variablesState["playerLust"] = playerLust;
+  story.variablesState["enemyCurrentLust"] = enemyCurrentLust;
+
+  // Debug output
+  console.log(`You dealt ${totalDamage} Will damage.`);
+  console.log(`Player Lust +${finalPlayerLustGain}, Enemy Lust +${finalEnemyLustGain}`);
+
+  return totalDamage;
+});
+
+
+
 //SHOP
 // Define different NPC sellers and their shop inventories
 
