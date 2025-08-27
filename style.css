@@ -725,9 +725,10 @@ img {
 */
 .choice {
     position: relative;
-	width: 175px;
+	height: 50px;
+	width: 260px;
 	text-align: center;
-    line-height: 1.7em;
+    line-height: 45px;
 	margin: 12px 15px;
 	font-weight: normal;
 	font-size: 1rem;
@@ -760,7 +761,7 @@ img {
     height: 100%; /* Ensures it covers the full height of the parent */
     text-decoration: none; /* Removes any underlines */
     color: white; /* Ensure text color is inherited correctly */
-    font-size: 15pt;
+    font-size: inherit;
 }
 
 /* 
@@ -1803,7 +1804,7 @@ text-shadow: 1px 1px 2px black;}
   Class applied to choice links
 */
 .choice a {
-    font-size: 12pt;
+    font-size: inherit;
 }
 /* width */
 ::-webkit-scrollbar {
@@ -2098,9 +2099,10 @@ text-shadow: 1px 1px 2px black;}
 
 .choice {
     position: relative;
+	height: 45px;
 	width: 100px;
 	text-align: center;
-    line-height: 1.7em;
+    line-height: 40px;
 	margin: 12px 15px;
 	font-weight: normal;
 	font-size: 1rem;
@@ -2116,7 +2118,7 @@ text-shadow: 1px 1px 2px black;}
 */
 .choice a {
 	
-    font-size: 12pt;
+    font-size: inherit;
 }
 /* width */
 ::-webkit-scrollbar {

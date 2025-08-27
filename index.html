@@ -13,49 +13,7 @@
 
     <link rel="stylesheet" href="style.css">
 
-<script>
-function openImagePopup(imageFileName) {
-    const imageUrl = imageFileName; // Use the provided file path as the URL
-    const popupWindow = window.open(
-        "",
-        "Image Popup",
-        "width=800,height=600,resizable=yes,scrollbars=no,status=no"
-    );
-    
-    popupWindow.document.write(`
-        <html><head><title>Image Popup</title></head>
-        <body style="margin:0;">
-            <img src="${imageUrl}" style="width:100%; height:100%; object-fit:contain;">
-        </body></html>
-    `);
-    popupWindow.document.close();
-}
 
-const currentPassword = "Lulamoon"; // Update this when the password changes
-
-function checkPassword() {
-    const storedPassword = localStorage.getItem("storedPassword");
-
-    // If the stored password is different from the current one, clear it
-    if (storedPassword && storedPassword !== currentPassword) {
-        localStorage.removeItem("storedPassword");
-    }
-
-    // Re-check in case it was just cleared
-    if (localStorage.getItem("storedPassword") === currentPassword) return;
-
-    const password = prompt("Please enter the password to access Early Access:");
-
-    if (password && password.trim() === currentPassword) {
-        localStorage.setItem("storedPassword", currentPassword);
-    } else {
-        alert("Incorrect password! To play the Early Access, make sure you sign up to Pony Adventure's Patreon.");
-        window.location = "https://www.patreon.com/user?u=65513562";
-    }
-}
-
-checkPassword();
-</script>
 </head>
 	
 <body>
@@ -267,5 +225,94 @@ checkPassword();
 	<script src="ink.js"></script>
     <script src="Pony Quest.js"></script>
     <script src="main.js"></script>
+	
+	<script>
+function openImagePopup(imageFileName) {
+    const imageUrl = imageFileName; // Use the provided file path as the URL
+    const popupWindow = window.open(
+        "",
+        "Image Popup",
+        "width=800,height=600,resizable=yes,scrollbars=no,status=no"
+    );
+    
+    popupWindow.document.write(`
+        <html><head><title>Image Popup</title></head>
+        <body style="margin:0;">
+            <img src="${imageUrl}" style="width:100%; height:100%; object-fit:contain;">
+        </body></html>
+    `);
+    popupWindow.document.close();
+}
+
+const currentPassword = "Lulamoon"; // Update this when the password changes
+
+function checkPassword() {
+    const storedPassword = localStorage.getItem("storedPassword");
+
+    // If the stored password is different from the current one, clear it
+    if (storedPassword && storedPassword !== currentPassword) {
+        localStorage.removeItem("storedPassword");
+    }
+
+    // Re-check in case it was just cleared
+    if (localStorage.getItem("storedPassword") === currentPassword) return;
+
+    const password = prompt("Please enter the password to access Early Access:");
+
+    if (password && password.trim() === currentPassword) {
+        localStorage.setItem("storedPassword", currentPassword);
+    } else {
+        alert("Incorrect password! To play the Early Access, make sure you sign up to Pony Adventure's Patreon.");
+        window.location = "https://www.patreon.com/user?u=65513562";
+    }
+}
+
+checkPassword();
+
+function fitTextToChoices() {
+  const minFontSize = 8; // minimum font size in px — adjust as needed
+  const maxFontSize = 22; // maximum font size in px
+
+  document.querySelectorAll('.choice a').forEach(link => {
+    const parent = link.parentElement;
+    const maxWidth = parent.clientWidth;
+    const maxHeight = parent.clientHeight;
+    let fontSize = minFontSize; // start from min font size
+    link.style.fontSize = fontSize + 'px';
+
+    // Grow font size until overflow or maxFontSize is reached
+    while (
+      link.scrollWidth <= maxWidth &&
+      link.scrollHeight <= maxHeight &&
+      fontSize < maxFontSize
+    ) {
+      fontSize++;
+      link.style.fontSize = fontSize + 'px';
+    }
+
+    // Back off if overflow happens
+    while (
+      (link.scrollWidth > maxWidth || link.scrollHeight > maxHeight) &&
+      fontSize > minFontSize
+    ) {
+      fontSize--;
+      link.style.fontSize = fontSize + 'px';
+    }
+  });
+}
+
+// Run on page load & window resize
+fitTextToChoices();
+window.addEventListener('resize', fitTextToChoices);
+
+// Watch for new .choice elements being added
+const observer = new MutationObserver(() => {
+  fitTextToChoices();
+});
+observer.observe(document.body, {
+  childList: true,
+  subtree: true
+});
+</script>
 </body>
 </html>

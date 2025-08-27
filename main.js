@@ -87,6 +87,36 @@ function calculateDamage(damage) {
   return 0;
 }
 
+
+story.ObserveVariable("bits", function(variableName, newValue) {
+  let bitsItem = inventory.find(item => item.name === 'Bits');
+  const quantityChange = newValue - (bitsItem?.quantity || 0);
+
+  if (quantityChange > 0) {
+    // Bits increased
+    if (bitsItem) {
+      bitsItem.quantity = newValue;
+    } else {
+      // Create a new Bits item with the updated quantity
+      const newBits = createItem('Bits', 'The main form of currency', newValue, 'IMAGE/Items/Treasure/8.png', false);
+      inventory.push(newBits);
+    }
+  } else if (quantityChange < 0 && bitsItem) {
+    // Bits decreased
+    const amountToRemove = Math.abs(quantityChange);
+    bitsItem.quantity = Math.max(bitsItem.quantity - amountToRemove, 0);
+
+    if (bitsItem.quantity === 0) {
+      const indexToRemove = inventory.indexOf(bitsItem);
+      inventory.splice(indexToRemove, 1);
+    }
+  }
+
+  updateInventoryUI();
+});
+
+
+
 //INVENTORY SYSTEM
 
  let inventory = [];
@@ -382,13 +412,12 @@ const npcSellers = {
     'Citrus': { 
 	shopTitle: 'CITRUS\'\S ORANGES',
 	inventory: [
-	createItem('Orange', 'Restores a little bit of health', 5, 'IMAGE/Items/Food/tile103.png', false, true, false, '0', 0),
-	createItem('Orange Juice', 'Restores  bit of health', 5, 'IMAGE/Items/Food/tile212.png', false, true, false, '0', 0)
+	createItem('Orange', 'Restores a little bit of health', 5, 'IMAGE/Items/Food/tile103.png', false, true, false, '0', 5),
+	createItem('Orange Juice', 'Restores  bit of health', 5, 'IMAGE/Items/Food/tile212.png', false, true, false, '0', 10)
 	] 
 
 		} 
 };
-
 function displayShopInventory(sellerName, shopTitle) {
     const currentSeller = npcSellers[sellerName];
     if (!currentSeller) {
@@ -396,103 +425,67 @@ function displayShopInventory(sellerName, shopTitle) {
         return;
     }
 
-    const currentInventory = currentSeller.inventory;
+    const storyContainer = document.getElementById('story');
 
+    // Check if title already exists
+    if (!storyContainer.querySelector('.shop-title')) {
+        const titleElement = document.createElement('h2');
+        titleElement.classList.add('shop-title');
+        titleElement.textContent = shopTitle;
+        storyContainer.appendChild(titleElement);
+    }
 
-    // Add shop title
-    const titleElement = document.createElement('h2');
-	titleElement.classList.add('shop-title');
-    titleElement.textContent = shopTitle;
-    document.getElementById('story').appendChild(titleElement);
+    // Check if header already exists
+    if (!storyContainer.querySelector('.shop-header')) {
+        const headerRow = document.createElement('div');
+        headerRow.classList.add('shop-header');
 
-    // Create header row
-	
+        ['Name', 'Description', 'Price', 'Quantity', ''].forEach(text => {
+            const span = document.createElement('span');
+            span.textContent = text;
+            headerRow.appendChild(span);
+        });
 
-    const headerRow = document.createElement('div');
-    headerRow.classList.add('shop-header');
-	
-    
-    const nameHeader = document.createElement('span');
-    nameHeader.textContent = 'Name';
-    headerRow.appendChild(nameHeader);
+        storyContainer.appendChild(headerRow);
+    }
 
-    const descriptionHeader = document.createElement('span');
-    descriptionHeader.textContent = 'Description';
-    headerRow.appendChild(descriptionHeader);
-
-    const priceHeader = document.createElement('span');
-    priceHeader.textContent = 'Price';
-    headerRow.appendChild(priceHeader);
-
-    const quantityHeader = document.createElement('span');
-    quantityHeader.textContent = 'Quantity';
-    headerRow.appendChild(quantityHeader);
-	
-	const emptyEndSpan = document.createElement('span');
-	emptyEndSpan.textContent = '';
-    headerRow.appendChild(emptyEndSpan);
-	
-    document.getElementById('story').appendChild(headerRow);
-
-    currentInventory.forEach((item) => {
-        // Check if the item is already in the story container
-        const existingItemInStory = document.querySelector(`#story li[data-name="${item.name}"]`);
+    // Now handle items:
+    currentSeller.inventory.forEach(item => {
+        const existingItemInStory = storyContainer.querySelector(`li.shop-item[data-name="${item.name}"]`);
 
         if (!existingItemInStory) {
-            // Create a new item element
             const li = document.createElement('li');
             li.classList.add('shop-item');
             li.setAttribute('data-name', item.name);
 
-            // Add an image to the shop item
             const img = document.createElement('img');
-            img.src = item.imageSrc; // Replace with the actual image source
+            img.src = item.imageSrc;
             li.appendChild(img);
 
-            // Display shop item information
-            const nameSpan = document.createElement('span');
-            nameSpan.textContent = item.name;
-            li.appendChild(nameSpan);
+            ['name', 'description', 'price', 'quantity'].forEach(key => {
+                const span = document.createElement('span');
+                span.textContent = item[key];
+                li.appendChild(span);
+            });
 
-            const descriptionSpan = document.createElement('span');
-            descriptionSpan.textContent = item.description;
-            li.appendChild(descriptionSpan);
-            
-            const priceSpan = document.createElement('span');
-            priceSpan.textContent = item.price;
-            li.appendChild(priceSpan);
-            
-            const quantitySpan = document.createElement('span');
-            quantitySpan.textContent = item.quantity;
-            li.appendChild(quantitySpan);
-
-            // Add "Buy" button
             const buyButton = createButton('Buy');
+            buyButton.disabled = item.quantity <= 0;
             buyButton.addEventListener('click', () => buyItemFromShop(item, sellerName));
             li.appendChild(buyButton);
 
-            // Disable the buy button if quantity is zero or less
-            if (item.quantity <= 0) {
-                buyButton.disabled = true;
-            }
-
-            // Append the item to the story container
-            document.getElementById('story').appendChild(li);
+            storyContainer.appendChild(li);
         } else {
-            // Update the quantity of the existing item in the story container
-            const existingQuantitySpan = existingItemInStory.querySelector('span:nth-child(5)'); // Assuming quantity is the  span
-            existingQuantitySpan.textContent = item.quantity; // Update quantity
-            
-            // Disable the buy button if quantity is zero or less
+            // Update quantity and button status only
+            const quantitySpan = existingItemInStory.querySelector('span:nth-child(5)');
+            if (quantitySpan) quantitySpan.textContent = item.quantity;
+
             const buyButton = existingItemInStory.querySelector('button');
-            if (item.quantity <= 0) {
-                buyButton.disabled = true;
-            } else {
-                buyButton.disabled = false;
-            }
+            if (buyButton) buyButton.disabled = item.quantity <= 0;
         }
     });
 }
+
+
 
 
 function buyItemFromShop(item, sellerName) {
@@ -1763,13 +1756,18 @@ story.ObserveVariable("will", function(variableName, newValue) {
 	
 
 story.BindExternalFunction("willHarm", (x) => {
-    will -= Math.round(x * ((lust / 100) + 1));
+	var willDmg = Math.round(x * ((lust / 100) + 1))
+    will -= willDmg;
 	
 	if (will < 0) {
         will = 0;
     }
+	lust += willDmg * 2;
+	if (lust >100){
+		lust = 100;
+	}
 	story.variablesState["will"] = will
-
+	story.variablesState["lust"] = lust
 });
 
 //Enemy Combat Stats
@@ -1808,10 +1806,10 @@ story.ObserveVariable("Seduce_Mod", function(variableName, newValue) {
 const sword = createItem('Sword', 'Deals slashing damage', 1, 'sword.png', true, false, false,  '1d6');
 const shield = createItem('Shield', 'Provides additional defense', 1, 'IMAGE/Items/Shield/tile091.png', true);
 const minorhealthPotion = createItem('Minor Health Potion', 'Restores a little bit of health', 1, 'IMAGE/Items/Potions/tile016.png', false, true);
-const hooves = createItem('Hooves', 'Your goddess given right', 1, 'IMAGE/Items/Weapons/tile131.png', true, false, false, '1');
-const wings = createItem('Wings', 'You use these to fly', 1, 'IMAGE/Items/Weapons/wing.png', true, false, false, '1');
-const claws = createItem('Claws', 'Your emperor given right', 1, 'IMAGE/Items/Weapons/claw.png', true, false, false, '1');
-const magic = createItem('Magic', 'Power from the Unknown', 1, 'IMAGE/Items/Weapons/562.png', true, false, false, '1');
+const hooves = createItem('Hooves', 'Your goddess given right', 1, 'IMAGE/Items/Weapons/tile131.png', true, false, false, '1d3');
+const wings = createItem('Wings', 'You use these to fly', 1, 'IMAGE/Items/Weapons/wing.png', true, false, false, '1d3');
+const claws = createItem('Claws', 'Your emperor given right', 1, 'IMAGE/Items/Weapons/claw.png', true, false, false, '1d3');
+const magic = createItem('Magic', 'Power from the Unknown', 1, 'IMAGE/Items/Weapons/562.png', true, false, false, '1d3');
 const bits = createItem('Bits', 'The main form of currency', 1, 'IMAGE/Items/Treasure/8.png', false);
 
 addItemToInventory(hooves);
@@ -1970,32 +1968,6 @@ const npcSellers = {
 
 
 
-story.ObserveVariable("bits", function(variableName, newValue) {
-  let bitsItem = inventory.find(item => item.name === 'Bits');
-  const quantityChange = newValue - (bitsItem?.quantity || 0);
-
-  if (quantityChange > 0) {
-    // Bits increased
-    if (bitsItem) {
-      bitsItem.quantity = newValue;
-    } else {
-      // Create a new Bits item with the updated quantity
-      const newBits = createItem('Bits', 'The main form of currency', newValue, 'IMAGE/Items/Treasure/8.png', false);
-      inventory.push(newBits);
-    }
-  } else if (quantityChange < 0 && bitsItem) {
-    // Bits decreased
-    const amountToRemove = Math.abs(quantityChange);
-    bitsItem.quantity = Math.max(bitsItem.quantity - amountToRemove, 0);
-
-    if (bitsItem.quantity === 0) {
-      const indexToRemove = inventory.indexOf(bitsItem);
-      inventory.splice(indexToRemove, 1);
-    }
-  }
-
-  updateInventoryUI();
-});
 
 
  const ponyContainer = document.getElementById('ponyContainer');
