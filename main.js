@@ -33,6 +33,7 @@ story.BindExternalFunction("get_name", () => {
 		let currentXp= 0;
 		let needXp= 0;
 	    let Attack_Mod = 0
+		let Seduce_Mod = 0
 		let hasWings = false;
 		let hasMagic = false;
 		let strength = 10;
@@ -1790,7 +1791,7 @@ story.ObserveVariable("Attack_Mod", function(variableName, newValue) {
 		});	    
 		
 story.ObserveVariable("Seduce_Mod", function(variableName, newValue) {
-			Attack_Mod = newValue;	
+			Seduce_Mod = newValue;	
 		});	    
 		
 		
@@ -1928,11 +1929,11 @@ story.BindExternalFunction("enemywillHarm", (diceExpr) => {
   const finalEnemyLustGain = baseLustGain; // Optionally modify this differently
 
   // Update lust values and clamp to 100
-  playerLust = Math.min(playerLust + finalPlayerLustGain, 100);
+	lust = Math.min(lust + finalPlayerLustGain, 100);
   enemyCurrentLust = Math.min(enemyCurrentLust + finalEnemyLustGain, 100);
 
   // Sync with Ink
-  story.variablesState["playerLust"] = playerLust;
+  story.variablesState["lust"] = lust;
   story.variablesState["enemyCurrentLust"] = enemyCurrentLust;
 
   // Debug output
