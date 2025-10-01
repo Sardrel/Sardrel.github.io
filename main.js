@@ -1774,6 +1774,7 @@ story.BindExternalFunction("willHarm", (x) => {
 //Enemy Combat Stats
 		let enemyCurrentWill = 0;
 		let enemyCurrentLust =0;
+		let enemyCurrentHP = 0;
 
 story.ObserveVariable("enemyCurrentLust", function(variableName, newValue) {
 			enemyCurrentLust = newValue;	
@@ -1781,8 +1782,7 @@ story.ObserveVariable("enemyCurrentLust", function(variableName, newValue) {
 story.ObserveVariable("enemyCurrentWill", function(variableName, newValue) {
 			enemyCurrentWill = newValue;	
 		});
-
-	    story.ObserveVariable("enemyCurrentHP", function(variableName, newValue) {
+story.ObserveVariable("enemyCurrentHP", function(variableName, newValue) {
 			enemyCurrentHP = newValue;	
 		});
 
