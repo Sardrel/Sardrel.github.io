@@ -1955,11 +1955,11 @@ const npcSellers = {
 	createItem('Orange Juice', 'Restores  bit of health', 5, 'IMAGE/Items/Food/tile212.png', false, false, false, '0', 20)
 	] 
 	},
-    'Scorching Heat': {
+    'Ember': {
 	inventory: [
-	createItem('Copper Dagger', 'Deals slashing damage', 15, 'IMAGE/Items/Food/tile103.png', false, false, false, '0', '1d4'),
-	createItem('Sword', 'Deals slashing damage', 5, 'IMAGE/Items/Food/tile212.png', false, false, false, '0', 20),
-	createItem('Javelin', 'Deals pierceing damage', 1, 'sword.png', true, '1d6'),
+	createItem('Iron Sword', 'Deals slashing damage', 1, 'IMAGE/Items/Food/tile103.png', true, false, true, '0', '1d6', 5),
+	createItem('Iron Mace', 'Deals bludgeoning damage', 1, 'IMAGE/Items/Food/tile212.png', true, false, true, '0', '1d6', 5),
+	createItem('Iron Spear', 'Deals pierceing damage', 1, 'sword.png', true, false, true, '1d6', 5),
 		] 
 		}, 
     // Add more sellers as needed
