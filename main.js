@@ -415,10 +415,20 @@ const npcSellers = {
 	inventory: [
 	createItem('Orange', 'Restores a little bit of health', 5, 'IMAGE/Items/Food/tile103.png', false, true, false, '0', 5),
 	createItem('Orange Juice', 'Restores  bit of health', 5, 'IMAGE/Items/Food/tile212.png', false, true, false, '0', 10)
-	] 
-
+	]
+	},
+	'Ember': {
+	shopTitle: 'EMBER\'\S FORGE',
+	inventory: [
+	createItem('Iron Sword', 'Deals slashing damage', 1, 'IMAGE/Items/Food/tile103.png', true, false, true, '1d6', 5),
+	createItem('Iron Mace', 'Deals bludgeoning damage', 1, 'IMAGE/Items/Food/tile212.png', true, false, true, '1d6', '5' ),
+	createItem('Iron Spear', 'Deals pierceing damage', 1, 'sword.png', true, false, true, '1d6', 5),
+		] 
 		} 
+
 };
+
+
 function displayShopInventory(sellerName, shopTitle) {
     const currentSeller = npcSellers[sellerName];
     if (!currentSeller) {
@@ -1942,33 +1952,6 @@ story.BindExternalFunction("enemywillHarm", (diceExpr) => {
 
   return totalDamage;
 });
-
-
-
-//SHOP
-// Define different NPC sellers and their shop inventories
-
-const npcSellers = {
-    'Citrus': { 
-	inventory: [
-	createItem('Orange', 'Restores a little bit of health', 5, 'IMAGE/Items/Food/tile103.png', false, false, false, '0', 5),
-	createItem('Orange Juice', 'Restores  bit of health', 5, 'IMAGE/Items/Food/tile212.png', false, false, false, '0', 20)
-	] 
-	},
-    'Ember': {
-	inventory: [
-	createItem('Iron Sword', 'Deals slashing damage', 1, 'IMAGE/Items/Food/tile103.png', true, false, true, '0', '1d6', 5),
-	createItem('Iron Mace', 'Deals bludgeoning damage', 1, 'IMAGE/Items/Food/tile212.png', true, false, true, '0', '1d6', 5),
-	createItem('Iron Spear', 'Deals pierceing damage', 1, 'sword.png', true, false, true, '1d6', 5),
-		] 
-		}, 
-    // Add more sellers as needed
-};
-
-// Function to display items in the shop and append them to the storyContainer
-
-
-
 
 
  const ponyContainer = document.getElementById('ponyContainer');
